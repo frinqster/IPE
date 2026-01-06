@@ -64,23 +64,77 @@ For a deep dive into the system architecture, mathematical models, and operation
 
 The system is controlled entirely by hand movements. Ensure your hand is visible and the lighting is good.
 
-| Gesture | Action | Description |
-| :--- | :--- | :--- |
-| **✊ FIST** | **RESET / IDLE** | Resets the system to default state. Exits any active mode. |
-| **🖐 OPEN HAND** | **ROTATE CAMERA** | Move your hand to look around the 3D scene. |
-| **👐 TWO HANDS** | **ZOOM** | Move hands apart to zoom in, close to zoom out. |
-| **✌️ PEACE SIGN** | **NEXT SHAPE** | Cycles through 3D forms (Sphere, Cube, Galaxy, Human, etc.). |
-| **<img src="Assets/Emojis/3_finger_emoji.png" height="21" align="middle"> 3-FINGER** | **TIME FREEZE** | Pauses particle movement. (Play/Pause in File Mode). |
-| **<img src="Assets/Emojis/pinch_emoji.png" height="20" align="middle"> PINCH** | **IMPLODE** | Collapses particles to the center. |
-| **🤘 ROCK ON** | **EXPLODE** | Scatters particles chaotically. |
-| **🤫 INDEX TO LIP** | **STEALTH MODE** | Dims lights and activates pulsing silent mode. |
-| **👍 THUMBS UP** | **FACE SCAN** | Maps the particle cloud to your face geometry. |
-| **<img src="Assets/Emojis/fist_to_mouth_emoji.png" height="19" align="middle"> FIST TO MOUTH** | **MIC VISUALIZER** | Activates microphone-based frequency bars. |
-| **<img src="Assets/Emojis/pinch_emoji.png" height="20" align="middle"> PINCH (HOLD)** | **SUPERNOVA** | Charge up for 4 seconds to trigger a massive explosion. |
+<table>
+  <thead>
+    <tr>
+      <th align="left">Gesture</th>
+      <th align="left">Action</th>
+      <th align="left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td valign="middle"><strong>✊ FIST</strong></td>
+      <td valign="middle"><strong>RESET / IDLE</strong></td>
+      <td valign="middle">Resets the system to default state. Exits any active mode.</td>
+    </tr>
+    <tr>
+      <td valign="middle"><strong>🖐 OPEN HAND</strong></td>
+      <td valign="middle"><strong>ROTATE CAMERA</strong></td>
+      <td valign="middle">Move your hand to look around the 3D scene.</td>
+    </tr>
+    <tr>
+      <td valign="middle"><strong>👐 TWO HANDS</strong></td>
+      <td valign="middle"><strong>ZOOM</strong></td>
+      <td valign="middle">Move hands apart to zoom in, close to zoom out.</td>
+    </tr>
+    <tr>
+      <td valign="middle"><strong>✌️ PEACE SIGN</strong></td>
+      <td valign="middle"><strong>NEXT SHAPE</strong></td>
+      <td valign="middle">Cycles through 3D forms (Sphere, Cube, Galaxy, Human, etc.).</td>
+    </tr>
+    <tr>
+      <td valign="middle"><strong><img src="Assets/Emojis/3_finger_emoji.png" height="23" valign="middle"> 3-FINGER</strong></td>
+      <td valign="middle"><strong>TIME FREEZE</strong></td>
+      <td valign="middle">Pauses particle movement. (Play/Pause in File Mode).</td>
+    </tr>
+    <tr>
+      <td valign="middle"><strong><img src="Assets/Emojis/pinch_emoji.png" height="20" valign="middle"> PINCH</strong></td>
+      <td valign="middle"><strong>IMPLODE</strong></td>
+      <td valign="middle">Collapses particles to the center.</td>
+    </tr>
+    <tr>
+      <td valign="middle"><strong>🤘 ROCK ON</strong></td>
+      <td valign="middle"><strong>EXPLODE</strong></td>
+      <td valign="middle">Scatters particles chaotically.</td>
+    </tr>
+    <tr>
+      <td valign="middle"><strong>🤫 INDEX TO LIP</strong></td>
+      <td valign="middle"><strong>STEALTH MODE</strong></td>
+      <td valign="middle">Dims lights and activates pulsing silent mode.</td>
+    </tr>
+    <tr>
+      <td valign="middle"><strong>👍 THUMBS UP</strong></td>
+      <td valign="middle"><strong>FACE SCAN</strong></td>
+      <td valign="middle">Maps the particle cloud to your face geometry.</td>
+    </tr>
+    <tr>
+      <td valign="middle"><strong><img src="Assets/Emojis/fist_to_mouth_emoji.png" height="22" valign="middle"> FIST TO MOUTH</strong></td>
+      <td valign="middle"><strong>MIC VISUALIZER</strong></td>
+      <td valign="middle">Activates microphone-based frequency bars.</td>
+    </tr>
+    <tr>
+      <td valign="middle"><strong><img src="Assets/Emojis/pinch_emoji.png" height="20" valign="middle"> PINCH (HOLD)</strong></td>
+      <td valign="middle"><strong>SUPERNOVA</strong></td>
+      <td valign="middle">Charge up for 4 seconds to trigger a massive explosion.</td>
+    </tr>
+  </tbody>
+</table>
 
-> **ℹ️ NOTE:** For visual references (images/videos) and more detailed explanations of each interaction, please consult the **SYSTEM MANUAL** located inside the **HELP** modal overlay on the website.
+> **ℹ️ NOTE:** For visual references (images/videos) and more detailed explanations of each interaction, please consult the **SYSTEM MANUAL** located inside the **HELP** menu on the website.
 
 ---
+
 
 ## <a id="tech-stack"></a>🛠 TECH STACK
 
