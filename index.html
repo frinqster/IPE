@@ -1,0 +1,1133 @@
+<!-- START OF FILE index.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Interactive Particle Engine v1.2</title>
+    <link rel="stylesheet" href="style.css">
+
+    <!-- FAVICON & METADATA -->
+    <link rel="icon" type="image/png" href="Logo/favicon.png">
+    <link rel="apple-touch-icon" href="Logo/favicon.png">
+
+    <!-- OPEN GRAPH / SOCIAL PREVIEW -->
+    <meta name="title" content="Interactive Particle Engine [IPE] v1.2">
+    <meta name="description"
+        content="A Gesture Controlled 3D Interface. Control 32,000 particles with your hands directly in the browser.">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://project-ipe.netlify.app/">
+    <meta property="og:title" content="Interactive Particle Engine [IPE] v1.2">
+    <meta property="og:description"
+        content="A Gesture Controlled 3D Interface. Control 32,000 particles with your hands directly in the browser.">
+    <meta property="og:image" content="https://project-ipe.netlify.app/Logo/social-preview.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://project-ipe.netlify.app/">
+    <meta property="twitter:title" content="Interactive Particle Engine [IPE] v1.2">
+    <meta property="twitter:description"
+        content="A Gesture Controlled 3D Interface. Control 32,000 particles with your hands directly in the browser.">
+    <meta property="twitter:image" content="https://project-ipe.netlify.app/Logo/social-preview.jpg">
+
+    <meta name="theme-color" content="#00ffcc">
+
+    <!-- THREE.JS & POST-PROCESSING STACK -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://unpkg.com/three@0.128.0/examples/js/postprocessing/EffectComposer.js"></script>
+    <script src="https://unpkg.com/three@0.128.0/examples/js/postprocessing/RenderPass.js"></script>
+    <script src="https://unpkg.com/three@0.128.0/examples/js/postprocessing/ShaderPass.js"></script>
+    <script src="https://unpkg.com/three@0.128.0/examples/js/shaders/CopyShader.js"></script>
+    <script src="https://unpkg.com/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js"></script>
+    <script src="https://unpkg.com/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
+    <script src="https://unpkg.com/three@0.128.0/examples/js/shaders/AfterimageShader.js"></script>
+    <script src="https://unpkg.com/three@0.128.0/examples/js/postprocessing/AfterimagePass.js"></script>
+
+    <!-- MEDIAPIPE AI MODELS -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/face_mesh.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+    <!-- LANDING PAGE -->
+    <div id="landing-page">
+        <!-- NAVBAR -->
+        <nav class="l-navbar" style="padding: 30px 20px;">
+            <div class="l-nav-brand" style="flex-direction: row; align-items: center; gap: 15px;">
+                <img src="Logo/favicon.png" alt="IPE Logo" style="height: 45px; width: auto;">
+                <div style="display: flex; flex-direction: column;">
+                    <div>
+                        <span>INTERACTIVE PARTICLE ENGINE</span>
+                        <span class="l-brand-highlight">[IPE]</span>
+                    </div>
+                    <div class="l-version">v1.2</div>
+                </div>
+            </div>
+
+            <div class="l-nav-links">
+                <a class="l-nav-item" onclick="openModal('about-overlay')">ABOUT</a>
+                <a class="l-nav-item" onclick="openModal('logs-overlay')">SYSTEM LOGS</a>
+                <a class="l-nav-item" onclick="openModal('help-overlay')">HELP</a>
+                <a class="l-nav-item" onclick="openModal('contact-overlay')">CONTACT</a>
+            </div>
+        </nav>
+
+        <div class="landing-content">
+            <div class="l-title" id="type-title"></div>
+            <div class="l-subtitle">A Gesture Controlled 3D Interface</div>
+
+            <button id="init-btn" class="l-btn" onclick="showPerfSelector()">INITIALIZE SYSTEM</button>
+
+            <!-- PERFORMANCE SELECTOR -->
+            <div id="perf-selector">
+                <div class="perf-help-btn" onclick="openHelpPerformance()">?</div>
+                <div style="color:#fff; font-size:1.5em; letter-spacing:3px; margin-bottom:10px;">SELECT PERFORMANCE
+                    MODE</div>
+
+                <div class="perf-option" onclick="launchSystem(32000)" onmouseenter="setPerfIndex(0)">
+                    <span class="p-name">ULTRA [32K]</span>
+                    <span class="p-desc">RTX 3060+ / M1 MAX</span>
+                </div>
+                <div class="perf-option" onclick="launchSystem(20000)" onmouseenter="setPerfIndex(1)">
+                    <span class="p-name">HIGH [20K]</span>
+                    <span class="p-desc">RECOMMENDED</span>
+                </div>
+                <div class="perf-option" onclick="launchSystem(12000)" onmouseenter="setPerfIndex(2)">
+                    <span class="p-name">MEDIUM [12K]</span>
+                    <span class="p-desc">AVERAGE LAPTOP</span>
+                </div>
+                <div class="perf-option" onclick="launchSystem(6000)" onmouseenter="setPerfIndex(3)">
+                    <span class="p-name">LOW [6K]</span>
+                    <span class="p-desc">OLD DEVICE / MOBILE</span>
+                </div>
+            </div>
+
+            <!-- LOADING UI -->
+            <div id="loading-container">
+                <div class="l-progress-track">
+                    <div id="progress-fill" class="l-progress-fill"></div>
+                </div>
+                <div id="loading-text" class="l-loading-text">INITIALIZING KERNEL...</div>
+            </div>
+
+            <div class="l-note">Requires Camera & Microphone Access</div>
+        </div>
+    </div>
+
+    <!-- MODAL: HELP OVERLAY -->
+    <div id="help-overlay" class="modal-overlay">
+        <div class="close-modal" onclick="closeModal('help-overlay')"
+            style="position:sticky; top:0px; float:right; margin-bottom:20px; z-index:100; background:rgba(0,0,0,0.5); border-radius:50%; width:30px; height:30px; display:flex; align-items:center; justify-content:center;">
+            ✕
+        </div>
+        <div class="modal-content">
+            <h1>SYSTEM MANUAL // V1.2</h1>
+            <p>Welcome to the <strong>SYSTEM MANUAL</strong> for Interactive Particle Engine (IPE) v1.2. If you are new
+                here, please refer to the information below to help you better use this system.</p>
+
+            <h2>OPTIMAL CONDITIONS</h2>
+            <p>For the best experience and tracking accuracy, please ensure the following:</p>
+            <div style="display: flex; gap: 15px; margin-bottom: 20px;">
+                <div
+                    style="flex: 1; border: 1px solid #333; background: rgba(0, 255, 204, 0.05); padding: 15px; border-radius: 4px;">
+                    <strong style="color: #00ffcc; display: block; margin-bottom: 5px;">LIGHTING</strong>
+                    <span style="font-size: 12px; color: #ccc;">Ensure your face and hands are evenly lit. Avoid strong
+                        backlighting (e.g., sitting with a window directly behind you).</span>
+                </div>
+                <div
+                    style="flex: 1; border: 1px solid #333; background: rgba(0, 255, 204, 0.05); padding: 15px; border-radius: 4px;">
+                    <strong style="color: #00ffcc; display: block; margin-bottom: 5px;">HAND ORIENTATION</strong>
+                    <span style="font-size: 12px; color: #ccc;">Keep your <strong>PALM FACING THE CAMERA</strong>. The
+                        neural network is trained primarily on open-palm poses.</span>
+                </div>
+            </div>
+
+            <h2>BASIC GESTURES</h2>
+            <p>These are the <strong>BASIC GESTURES</strong> which allow you to control the movement, shape and state of
+                the particle system.</p>
+            <div class="gesture-grid">
+
+                <!-- FLIPPABLE: FIST -->
+                <div class="gesture-flip-container" id="g-item-fist">
+                    <!-- FRONT FACE -->
+                    <div class="gesture-item" onclick="toggleRef(this)">
+                        <div class="g-header">
+                            <span class="g-title">IDLE POSITION</span>
+                            <div style="display:flex; gap:5px; align-items:center;">
+                                <div class="flip-btn" onclick="flipCard(event, this)">
+                                    <svg viewBox="0 0 24 24" width="10" height="10" stroke="currentColor"
+                                        stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M21.5 2v6h-6M21.34 5.5A10 10 0 1 0 22 12" />
+                                    </svg>
+                                </div>
+                                <span class="g-arrow">▼</span>
+                            </div>
+                        </div>
+                        <span class="g-desc">Returns the particle system to default state.</span>
+                        <span class="g-how">Make a FIST ✊</span>
+                        <div class="g-ref-container"><img src="References/fist.png" class="g-ref-img" alt="Reference">
+                        </div>
+                    </div>
+                    <!-- BACK FACE -->
+                    <div class="gesture-item" onclick="toggleRef(this)" style="display:none;">
+                        <div class="g-header">
+                            <span class="g-title">ALT: GLOBAL RESET</span>
+                            <div style="display:flex; gap:5px; align-items:center;">
+                                <div class="flip-btn" onclick="flipCard(event, this)">
+                                    <svg viewBox="0 0 24 24" width="10" height="10" stroke="currentColor"
+                                        stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M21.5 2v6h-6M21.34 5.5A10 10 0 1 0 22 12" />
+                                    </svg>
+                                </div>
+                                <span class="g-arrow">▼</span>
+                            </div>
+                        </div>
+                        <span class="g-desc">Emergency override to exit ANY active mode instantly.</span>
+                        <span class="g-how">Make a FIST ✊</span>
+                        <div class="g-ref-container"><img src="References/fist.png" class="g-ref-img" alt="Reference">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gesture-item" id="g-item-open" onclick="toggleRef(this)">
+                    <div class="g-header"><span class="g-title">CAMERA ROTATE</span><span class="g-arrow">▼</span></div>
+                    <span class="g-desc">Manually look around the scene.</span>
+                    <span class="g-how">OPEN HAND 🖐 and drag.</span>
+                    <div class="g-ref-container"><img src="References/open.png" class="g-ref-img" alt="Reference"></div>
+                </div>
+
+                <!-- CAROUSEL: ZOOM -->
+                <div class="gesture-item" onclick="toggleRef(this)">
+                    <div class="g-header"><span class="g-title">ZOOM</span><span class="g-arrow">▼</span></div>
+                    <span class="g-desc">Moves camera closer or further.</span>
+                    <span class="g-how">Show TWO HANDS 👐 and move them apart/closer.</span>
+                    <div class="g-ref-container">
+                        <div class="carousel-container">
+                            <div class="carousel-btn prev-btn" onclick="changeSlide(event, 'zoom', -1)">❮</div>
+                            <img id="ref-zoom" src="References/zoom1.png" class="g-ref-img" alt="Reference">
+                            <div id="cap-zoom" class="carousel-caption">HAND POSITION REFERENCE</div>
+                            <div class="carousel-btn next-btn" onclick="changeSlide(event, 'zoom', 1)">❯</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gesture-item" id="g-item-peace" onclick="toggleRef(this)">
+                    <div class="g-header"><span class="g-title">NEXT SHAPE</span><span class="g-arrow">▼</span></div>
+                    <span class="g-desc">Cycles to the next 3D object.</span>
+                    <span class="g-how">Make a PEACE Sign ✌️</span>
+                    <div class="g-ref-container"><img src="References/peace.png" class="g-ref-img" alt="Reference">
+                    </div>
+                </div>
+
+                <!-- FLIPPABLE: 3-FINGER -->
+                <div class="gesture-flip-container">
+                    <!-- FRONT FACE -->
+                    <div class="gesture-item" onclick="toggleRef(this)">
+                        <div class="g-header">
+                            <span class="g-title">TIME FREEZE</span>
+                            <div style="display:flex; gap:5px; align-items:center;">
+                                <div class="flip-btn" onclick="flipCard(event, this)">
+                                    <svg viewBox="0 0 24 24" width="10" height="10" stroke="currentColor"
+                                        stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M21.5 2v6h-6M21.34 5.5A10 10 0 1 0 22 12" />
+                                    </svg>
+                                </div>
+                                <span class="g-arrow">▼</span>
+                            </div>
+                        </div>
+                        <span class="g-desc">Pauses particle's idle movement.</span>
+                        <span class="g-how">Put up 3-FINGERS <img src="Emojis/3_finger_emoji.png" class="s-emoji1"
+                                alt=""></span>
+                        <div class="g-ref-container"><img src="References/three.png" class="g-ref-img" alt="Reference">
+                        </div>
+                    </div>
+                    <!-- BACK FACE -->
+                    <div class="gesture-item" onclick="toggleRef(this)" style="display:none;">
+                        <div class="g-header">
+                            <span class="g-title">ALT: MEDIA CONTROL</span>
+                            <div style="display:flex; gap:5px; align-items:center;">
+                                <div class="flip-btn" onclick="flipCard(event, this)">
+                                    <svg viewBox="0 0 24 24" width="10" height="10" stroke="currentColor"
+                                        stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M21.5 2v6h-6M21.34 5.5A10 10 0 1 0 22 12" />
+                                    </svg>
+                                </div>
+                                <span class="g-arrow">▼</span>
+                            </div>
+                        </div>
+                        <span class="g-desc">Toggles PLAY / PAUSE during <span class="text-link"
+                                onclick="jumpToVisualizerFile(event)">VISUALIZER (FILE)</span> mode.</span>
+                        <span class="g-how">Put up 3-FINGERS <img src="Emojis/3_finger_emoji.png" class="s-emoji1"
+                                alt=""></span>
+                        <div class="g-ref-container"><img src="References/three.png" class="g-ref-img" alt="Reference">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CAROUSEL: IMPLODE (PINCH) -->
+                <div class="gesture-item" id="g-item-pinch" onclick="toggleRef(this)">
+                    <div class="g-header"><span class="g-title">IMPLODE</span><span class="g-arrow">▼</span></div>
+                    <span class="g-desc">Collapses particles to center.</span>
+                    <span class="g-how">PINCH using your whole hand <img src="Emojis/pinch_emoji.png" class="s-emoji3"
+                            alt=""></span>
+                    <div class="g-ref-container">
+                        <div class="carousel-container">
+                            <div class="carousel-btn prev-btn" onclick="changeSlide(event, 'pinch', -1)">❮</div>
+                            <img id="ref-pinch" src="References/pinch1.png" class="g-ref-img" alt="Reference">
+                            <div id="cap-pinch" class="carousel-caption">FRONT VIEW</div>
+                            <div class="carousel-btn next-btn" onclick="changeSlide(event, 'pinch', 1)">❯</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gesture-item" id="g-item-rock" onclick="toggleRef(this)">
+                    <div class="g-header"><span class="g-title">EXPLODE</span><span class="g-arrow">▼</span></div>
+                    <span class="g-desc">Scatters particles outward.</span>
+                    <span class="g-how">Make a ROCK/HORNS Sign 🤘</span>
+                    <div class="g-ref-container">
+                        <div class="carousel-container">
+                            <div class="carousel-btn prev-btn" onclick="changeSlide(event, 'rock', -1)">❮</div>
+                            <img id="ref-rock" src="References/rock1.png" class="g-ref-img" alt="Reference">
+                            <div id="cap-rock" class="carousel-caption">VERSION A</div>
+                            <div class="carousel-btn next-btn" onclick="changeSlide(event, 'rock', 1)">❯</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECRET GESTURE CARD -->
+                <div class="gesture-item" id="g-item-secret" onclick="toggleRef(this)">
+                    <div class="g-header"><span class="g-title">HUH, YOU FOUND THIS ?!!</span><span
+                            class="g-arrow">▼</span></div>
+                    <span class="g-desc">Hard to believe but here's your reward.</span>
+                    <span class="g-how">Make an 'L' shape 👆</span>
+                    <div class="g-ref-container"><img src="References/secret.png" class="g-ref-img" alt="Reference">
+                    </div>
+                </div>
+
+            </div>
+
+            <h2>SPECIAL MODES</h2>
+            <p>These are the <strong>SPECIAL MODES</strong> which unlock unique particle effects and interactions. All
+                modes can be exited with the <span class="text-link"
+                    onclick="jumpToGesture(event, 'g-item-fist')">FIST</span>
+                gesture; <span class="text-link" onclick="jumpToGesture(event, 'g-item-peace')">PEACE</span> also exits
+                every
+                mode except <span class="text-link" onclick="jumpToGesture(event, 'g-item-stealth')">STEALTH
+                    MODE</span>.</p>
+            <div class="gesture-grid">
+
+                <!-- CAROUSEL: SUPERNOVA -->
+                <div class="gesture-item" id="g-item-supernova" onclick="toggleRef(this)">
+                    <div class="g-header"><span class="g-title">SUPERNOVA</span><span class="g-arrow">▼</span></div>
+                    <span class="g-desc">Charge explosion.</span>
+                    <span class="g-how">HOLD <span class="text-link"
+                            onclick="jumpToGesture(event, 'g-item-pinch')">PINCH</span> <img
+                            src="Emojis/pinch_emoji.png" class="s-emoji3" alt=""> for 4 seconds.</span>
+                    <div class="g-ref-container">
+                        <div class="carousel-container">
+                            <div class="carousel-btn prev-btn" onclick="changeSlide(event, 'supernova', -1)">❮</div>
+                            <img id="ref-supernova" src="References/pinch1.png" class="g-ref-img" alt="Reference">
+                            <div id="cap-supernova" class="carousel-caption">FRONT VIEW</div>
+                            <div class="carousel-btn next-btn" onclick="changeSlide(event, 'supernova', 1)">❯</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gesture-item" id="g-item-stealth" onclick="toggleRef(this)">
+                    <div class="g-header"><span class="g-title">STEALTH MODE</span><span class="g-arrow">▼</span></div>
+                    <span class="g-desc">Dims lights and particles pulse.</span>
+                    <span class="g-how">Put your INDEX FINGER to LIPS (Shhh) 🤫</span>
+                    <div class="g-ref-container"><img src="References/shhh.png" class="g-ref-img" alt="Reference"></div>
+                </div>
+
+                <!-- FLIPPABLE: AUDIO LINK -->
+                <!-- ADDED ID HERE -->
+                <div class="gesture-flip-container" id="g-container-visualizer">
+                    <!-- FRONT FACE -->
+                    <div class="gesture-item" onclick="toggleRef(this)">
+                        <div class="g-header">
+                            <span class="g-title">VISUALIZER (MIC)</span>
+                            <div style="display:flex; gap:5px; align-items:center;">
+                                <div class="flip-btn" onclick="flipCard(event, this)">
+                                    <svg viewBox="0 0 24 24" width="10" height="10" stroke="currentColor"
+                                        stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M21.5 2v6h-6M21.34 5.5A10 10 0 1 0 22 12" />
+                                    </svg>
+                                </div>
+                                <span class="g-arrow">▼</span>
+                            </div>
+                        </div>
+                        <span class="g-desc">Microphone reactive frequency bars.</span>
+                        <span class="g-how">Hold your FIST near MOUTH <img src="Emojis/fist_to_mouth_emoji.png"
+                                class="s-emoji2" alt=""></span>
+                        <div class="g-ref-container">
+                            <div class="carousel-container">
+                                <div class="carousel-btn prev-btn" onclick="changeSlide(event, 'mic', -1)">❮</div>
+                                <img id="ref-mic" src="References/mic1.png" class="g-ref-img" alt="Reference">
+                                <div id="cap-mic" class="carousel-caption">FRONT VIEW</div>
+                                <div class="carousel-btn next-btn" onclick="changeSlide(event, 'mic', 1)">❯</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- BACK FACE -->
+                    <div class="gesture-item" onclick="toggleRef(this)" style="display:none;">
+                        <div class="g-header">
+                            <span class="g-title">VISUALIZER (FILE)</span>
+                            <div style="display:flex; gap:5px; align-items:center;">
+                                <div class="flip-btn" onclick="flipCard(event, this)">
+                                    <svg viewBox="0 0 24 24" width="10" height="10" stroke="currentColor"
+                                        stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M21.5 2v6h-6M21.34 5.5A10 10 0 1 0 22 12" />
+                                    </svg>
+                                </div>
+                                <span class="g-arrow">▼</span>
+                            </div>
+                        </div>
+                        <span class="g-desc">Reactive frequency bars for audio files.</span>
+                        <span class="g-how">DRAG & DROP an audio file or use the <span class="text-link"
+                                onclick="highlightAudioSettings(event)">SELECT FILE</span> button.</span>
+                        <div class="g-ref-container">
+                            <div class="no-gesture-box">
+                                NO GESTURE TO SHOW
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gesture-item" onclick="toggleRef(this)">
+                    <div class="g-header"><span class="g-title">FACE SCAN</span><span class="g-arrow">▼</span></div>
+                    <span class="g-desc">Maps particles to your face in 3D.</span>
+                    <span class="g-how">Put up a THUMBS UP 👍</span>
+                    <div class="g-ref-container"><img src="References/thumb.png" class="g-ref-img" alt="Reference">
+                    </div>
+                </div>
+            </div>
+
+            <h2>INTERFACE CONTROLS</h2>
+            <p>These are the HUD elements located at the bottom of the viewport.</p>
+            <div class="gesture-grid">
+
+                <div class="gesture-item">
+                    <div class="g-header"><span class="g-title">OPTICAL CAPTURE</span></div>
+                    <span class="g-desc">Takes a high-res .PNG screenshot of the system (UI hidden).</span>
+                    <span class="g-how">Click the 📷 Camera Icon.</span>
+                </div>
+
+                <div class="gesture-item">
+                    <div class="g-header"><span class="g-title">LAYOUT SWAP</span></div>
+                    <span class="g-desc">Swaps the position of the Camera Feed and the HUD ELEMENTS.</span>
+                    <span class="g-how">Click the ⇄ Arrows on the camera feed.</span>
+                </div>
+
+                <div class="gesture-item">
+                    <div class="g-header"><span class="g-title">NEURAL CONFIG</span></div>
+                    <span class="g-desc">Opens the NEURAL CALIBRATION menu. Detailed in <span class="text-link"
+                            onclick="jumpToGesture(event, 'neural-section-wrapper')">NEURAL CALIBRATION</span>.</span>
+                    <span class="g-how">Click the ⚙️ Gear Icon.</span>
+                </div>
+
+            </div>
+
+            <!-- NEURAL CALIBRATION -->
+            <div id="neural-section-wrapper">
+                <h2 id="neural-header">NEURAL CALIBRATION</h2>
+                <p>The <strong>NEURAL CALIBRATION MENU</strong> lets you adjust the particle system settings to your
+                    preference. Access it via the <strong>GEAR ICON</strong> located at the bottom corner of the
+                    viewport.
+                </p>
+
+                <div class="nc-accordion">
+                    <!-- SYSTEM CORE -->
+                    <div class="nc-item" id="nc-system-core" onclick="toggleNc(this)">
+                        <div class="nc-header">SYSTEM CORE <span class="nc-arrow">▶</span></div>
+                        <div class="nc-content">
+                            <ul class="sm-list">
+                                <li id="li-perf-mode"><strong>PERFORMANCE MODE:</strong> Adjusts the total particle
+                                    count to balance visual quality and performance (Ultra / High / Medium / Low).</li>
+                                <li><strong>PARTICLE SPECTRUM:</strong> Configures the baseline color of the Particle
+                                    System in IDLE STATE (no gestures are active) as well as in <span class="text-link"
+                                        onclick="jumpToGesture(event, 'g-item-stealth')">STEALTH
+                                        MODE</span>.
+                                    <ul
+                                        style="margin-top: 8px; padding-left: 15px; border-left: 2px solid rgba(0, 255, 204, 0.3); list-style: none;">
+                                        <li style="margin-bottom: 5px;"><strong>↳ COLOR PRESETS:</strong> A collection
+                                            of pre-calibrated neon themes for rapid customization.</li>
+                                        <li style="margin-bottom: 0;"><strong>↳ SPECTRUM ANALYSIS:</strong> Accessed via
+                                            <strong>CUSTOM CONFIG [+]</strong>. Allows for precise manual adjustment of
+                                            Hue and Saturation to create unique color signatures.
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li><strong>MOTION BLUR:</strong> Toggles the cinematic light trails of particles. Makes
+                                    movement
+                                    look smoother.
+                                    <ul
+                                        style="margin-top: 8px; padding-left: 15px; border-left: 2px solid rgba(0, 255, 204, 0.3); list-style: none;">
+                                        <li style="margin-bottom: 0;"><strong>↳ BLUR INTENSITY:</strong> Controls how
+                                            long
+                                            the light trails stay on screen.</li>
+                                    </ul>
+                                </li>
+                                <li><strong>ROTATION SPEED:</strong> Adjusts the idle spin velocity of the particle
+                                    cloud.
+                                </li>
+                                <li><strong><span class="text-link" onclick="jumpToGesture(event, 'g-item-open')">OPEN
+                                            HAND</span> SENSITIVITY:</strong> Controls how fast the camera rotates when
+                                    dragging.</li>
+                                <li><strong>EXPLOSION SPEED:</strong> Sets the velocity of the <span class="text-link"
+                                        onclick="jumpToGesture(event, 'g-item-rock')">ROCK</span> gesture particle
+                                    scatter.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- SUPERNOVA PROTOCOL -->
+                    <div class="nc-item" onclick="toggleNc(this)">
+                        <div class="nc-header">SUPERNOVA PROTOCOL <span class="nc-arrow">▶</span></div>
+                        <div class="nc-content">
+                            <ul class="sm-list">
+                                <li><strong>SUPERNOVA VIBRATION:</strong> Enables haptic feedback (if supported by the
+                                    device) during the event.</li>
+                                <li><strong>SUPERNOVA CHARGE:</strong> Sets the required hold time for the SUPERNOVA
+                                    event.</li>
+                                <li><strong>SUPERNOVA FORCE:</strong> Controls the blast radius of the explosion.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- STEALTH CONFIG -->
+                    <div class="nc-item" onclick="toggleNc(this)">
+                        <div class="nc-header">STEALTH CONFIG <span class="nc-arrow">▶</span></div>
+                        <div class="nc-content">
+                            <ul class="sm-list">
+                                <li><strong>BASE DIMNESS:</strong> Sets the floor opacity level (how dark the particles
+                                    get)
+                                    between pulses.</li>
+                                <li><strong>PULSE BRIGHTNESS:</strong> Sets the peak opacity level (how bright the
+                                    particles
+                                    get)
+                                    between pulses.</li>
+                                <li><strong>PULSE SPEED:</strong> Controls the frequency (Hz) of the particle's pulses.
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- AUDIO LINK -->
+                    <div class="nc-item" id="nc-audio-link" onclick="toggleNc(this)">
+                        <div class="nc-header">AUDIO LINK <span class="nc-arrow">▶</span></div>
+                        <div class="nc-content">
+                            <ul class="sm-list">
+                                <li id="li-audio-input"><strong>AUDIO INPUT:</strong> Allows you to load local audio
+                                    files to drive the
+                                    visualizer.
+                                    <ul
+                                        style="margin-top: 8px; padding-left: 15px; border-left: 2px solid rgba(0, 255, 204, 0.3); list-style: none;">
+                                        <li style="margin-bottom: 5px;"><strong>↳ UPLOAD BUTTON:</strong> Click 'SELECT
+                                            FILE' in the NEURAL CALIBRATION menu.</li>
+                                        <li style="margin-bottom: 0;"><strong>↳ DRAG & DROP:</strong> Simply drag an
+                                            audio file from your computer and drop it anywhere on the screen.</li>
+                                    </ul>
+                                </li>
+                                <li><strong>VISUALIZER HEIGHT:</strong> Controls the sensitivity and max height of the
+                                    audio
+                                    frequency bars.</li>
+                                <li><strong>VISUALIZER ROTATION:</strong> Controls the visualizer's idle rotation speed.
+                                </li>
+                                <li><strong>BAR COUNT:</strong> Adjusts the number of frequency bars displayed.</li>
+                                <li><strong>VISUALIZER SMOOTHNESS:</strong> Adjusts the responsiveness of the bars.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- FACE GEOMETRY -->
+                    <div class="nc-item" onclick="toggleNc(this)">
+                        <div class="nc-header">FACE GEOMETRY <span class="nc-arrow">▶</span></div>
+                        <div class="nc-content">
+                            <ul class="sm-list">
+                                <li><strong>X OFFSET (L/R):</strong> Horizontally shifts the mapped face points to
+                                    align
+                                    with your camera's center.</li>
+                                <li><strong>Y OFFSET (U/D):</strong> Vertically shifts the mapped face points to
+                                    align
+                                    with
+                                    your camera's center.</li>
+                                <li><strong>FACE SCALE:</strong> Increases or decreases the overall size of the face
+                                    mesh.
+                                </li>
+                                <li><strong>FACE ROTATION:</strong> Rotates the 3D mask along the Y-axis (YAW) to
+                                    compensate
+                                    for angled webcam placement.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h2>FAQ / TROUBLESHOOTING</h2>
+            <ul class="sm-list">
+                <li><strong>System appears unresponsive on launch:</strong> Wait for the particles to change from white
+                    to blue. This may take upto 1 minute and depends on your hardware.</li>
+                <li><strong>Low-light warning appears in bright conditions:</strong> The sensor needs 4-5 seconds to
+                    recalibrate and update.</li>
+                <li><strong>Tracking is jittery:</strong> Ensure your room is well-lit. Shadows interfere with AI
+                    detection. Also ensure that you are doing the gestures correctly; for that refer to the SYSTEM
+                    MANUAL.</li>
+                <li><strong>Camera/Microphone not detected:</strong> Ensure your browser has permission to access the
+                    camera/microphone. Try refreshing the page or using a different browser.</li>
+                <li><strong>Bad Performance / SYSTEM OVERLOAD:</strong> Lower the performance mode and turn off motion
+                    blur. This app runs best
+                    on Desktop (Chrome/Edge/Firefox) with hardware acceleration enabled.</li>
+                <li><strong>System is stuck zooming:</strong> Zoom activates automatically when TWO hands are detected.
+                    Ensure your other hand (or a bystander's) is not accidentally visible in the frame.</li>
+                <li><strong>System stretches during zoom or Stealth Mode:</strong> This may occur during the first few
+                    activations. The system automatically recalibrates after the initial gestures and returns to normal.
+                </li>
+                <li><strong>Other issues:</strong> Try lowering the performance mode, turning off motion blur and
+                    refreshing the page. If problems
+                    persist, contact the operator via the CONTACT menu.</li>
+                <li><strong>Suggestions/Feedback:</strong> Feel free to reach out via the CONTACT menu. Your input helps
+                    improve the system!</li>
+            </ul>
+
+            <!-- PRIVACY FOOTER -->
+            <div
+                style="margin-top: 30px; padding-top: 15px; border-top: 1px solid #333; font-size: 10px; color: #666; text-align: center;">
+                PRIVACY NOTICE: All video & audio processing is performed locally on this device. No data is transmitted
+                to the cloud.
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: ABOUT -->
+    <div id="about-overlay" class="modal-overlay">
+        <div class="close-modal" onclick="closeModal('about-overlay')"
+            style="position:sticky; top:0px; float:right; margin-bottom:20px; z-index:100; background:rgba(0,0,0,0.5); border-radius:50%; width:30px; height:30px; display:flex; align-items:center; justify-content:center;">
+            ✕</div>
+        <div class="modal-content">
+            <h1>SYSTEM ARCHITECTURE</h1>
+            <p>The Interactive Particle Engine (IPE) is an advanced experiment in gesture-controlled 3D interfaces. It
+                seamlessly maps your physical movements to a digital particle system in real-time, executing entirely
+                within your browser's local environment.</p>
+
+            <h2>TECHNICAL STACK</h2>
+            <div class="tech-grid">
+                <div class="tech-item">THREE.JS (WEBGL 2.0)</div>
+                <div class="tech-item">MEDIAPIPE (HANDS/FACEMESH)</div>
+                <div class="tech-item">GLSL SHADERS (CUSTOM)</div>
+                <div class="tech-item">POST-PROCESSING STACK (BLOOM/AFTERIMAGE)</div>
+                <div class="tech-item">WEB AUDIO FFT</div>
+            </div>
+
+            <h2>SYSTEM REQUIREMENTS</h2>
+            <p><strong>BROWSER COMPATIBILITY:</strong> This engine is heavily optimized for Chromium-based browsers
+                (Google Chrome, Microsoft Edge, Brave). Users on Safari (macOS/iOS) or Firefox may experience reduced
+                framerates or visual artifacts due to differences in WebGL implementation.</p>
+
+            <h2>OPERATIONAL LOGIC</h2>
+            <p><strong>DYNAMIC NEURAL TRACKING:</strong> Two concurrent convolutional neural networks (MediaPipe Hands &
+                FaceMesh) process the video feed. Coordinates are normalized to a Cartesian vector space and smoothed
+                via linear interpolation to eliminate sensor jitter. The system automatically switches between
+                <strong>Lite</strong> and
+                <strong>Full</strong> complexity models based on your selected Performance Mode to ensure smooth
+                framerates on both mobile devices and high-end desktops.
+            </p>
+            <p><strong>PARTICLE SIMULATION:</strong> A buffer geometry system manages up to 32,000 individual vertices.
+                Their positions are computed CPU-side based on the active state (Idle, Face Mapped, Audio Reactive, or
+                Gesture Driven), while the GPU handles rendering via custom Vertex and Fragment shaders.</p>
+
+            <p><strong>RENDER PIPELINE:</strong> The visual output is processed through a custom `EffectComposer` stack:
+                <br>1. <strong>Base Render:</strong> Raw particle geometry.
+                <br>2. <strong>AfterimagePass:</strong> Generates variable light trails (Motion Blur).
+                <br>3. <strong>UnrealBloomPass:</strong> Applied for high-dynamic-range glow effects.
+            </p>
+
+            <h2>PRIVACY & SECURITY PROTOCOL</h2>
+            <p><strong>LOCAL PROCESSING:</strong> This system operates entirely client-side. Your camera and microphone
+                inputs are processed directly within your browser's sandboxed environment via WebAssembly (WASM).</p>
+
+            <p><strong>DATA ISOLATION:</strong> The AI inference engines (MediaPipe) run locally on your device.
+                No video feeds, audio streams, or biometric data are transmitted to external servers, cloud storage,
+                or third-party analytics. The visual output is ephemeral and exists only for the duration of your
+                session.</p>
+
+            <h2 style="margin-top: 40px;">TECHNICAL RESOURCES</h2>
+            <p style="text-align: center; margin-bottom: 25px;">
+                For a detailed exploration of the Interactive Particle Engine's design, algorithms, and implementation,
+                download the official:
+                <br>
+                <a href="IPE Documentation.pdf" download="IPE_DOCUMENTATION.pdf"
+                    class="contact-btn"
+                    style="display:inline-flex; width:auto; margin-top:15px; font-size:1em; padding:10px 25px; align-items:center;">
+                    <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"
+                        stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px;">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                        <line x1="10" y1="9" x2="8" y2="9"></line>
+                    </svg>
+                    TECHNICAL SPECIFICATION (PDF) <span>&rarr;</span>
+                </a>
+            </p>
+
+            <div
+                style="margin-top: 30px; padding-top: 15px; border-top: 1px solid #333; font-size: 10px; color: #666; text-align: center;">
+                Copyright © 2026 SYED FAIQ HUSSAIN. All Rights Reserved.
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: SYSTEM LOGS -->
+    <div id="logs-overlay" class="modal-overlay">
+        <div class="close-modal" onclick="closeModal('logs-overlay')"
+            style="position:sticky; top:0px; float:right; margin-bottom:20px; z-index:100; background:rgba(0,0,0,0.5); border-radius:50%; width:30px; height:30px; display:flex; align-items:center; justify-content:center;">
+            ✕
+        </div>
+        <div class="modal-content">
+            <h1>SYSTEM LOGS</h1>
+
+            <!-- V1.2.0 - LATEST -->
+            <div style="margin-bottom: 25px; border-left: 2px solid #00ffcc; padding-left: 15px;">
+                <h3 style="color: #fff; border: none; margin: 0; font-size: 14px;">v1.2.0 [CURRENT STABLE]</h3>
+                <p style="margin-top: 5px; font-size: 11px; color: #00ffcc; letter-spacing: 1px;">THE "SENSORY" UPDATE
+                </p>
+                <ul class="sm-list" style="margin-top: 10px; list-style-type: square; color: #ccc;">
+                    <li><strong>VISUALIZER (FILE):</strong> Added audio file analysis and integrated DRAG & drop
+                        protocol for local audio files with
+                        custom FFT frequency mapping.</li>
+                    <li><strong>POST-PROCESSING STACK:</strong> Deployed <strong>Unreal Bloom</strong> (Glow) and
+                        <strong>Motion Blur</strong> (Afterimage) shaders.
+                    </li>
+                    <li><strong>NEURAL CALIBRATION EXPANSION:</strong> Significant upgrades to the configuration
+                        modules:
+                        <ul
+                            style="margin-top:7px; margin-bottom: 5px; padding-left:17px; list-style-type:circle; color:#aaa; font-size:11px;">
+                            <li><strong>COLOR SPECTRUM:</strong> Deployed RGB/HSV Color Picker for custom particle
+                                themes.</li>
+                            <li><strong>VISUALIZER FINE-TUNING:</strong> Added granular control for Bar Count (32-256)
+                                and
+                                Smoothing Constants.</li>
+                            <li><strong>HAPTIC FEEDBACK:</strong> Enabled vibration API support for Supernova event.
+                            </li>
+                        </ul>
+                    <li><strong>SYSTEM STABILITY:</strong> General bug fixes and performance optimizations for sustained
+                        runtime.</li>
+                    <li><strong>UX POLISH:</strong> Added "Optimal Conditions" guide to SYSTEM MANUAL (HELP overlay).
+                    </li>
+                </ul>
+            </div>
+
+            <!-- V1.1.5 -->
+            <div style="margin-bottom: 25px; border-left: 2px solid #aaa; padding-left: 15px;">
+                <h3 style="color: #ddd; border: none; margin: 0; font-size: 14px;">v1.1.5</h3>
+                <p style="margin-top: 5px; font-size: 11px; color: #888; letter-spacing: 1px;">SYSTEM CONFIGURATION
+                    UPDATE</p>
+                <ul class="sm-list" style="margin-top: 10px; list-style-type: square; color: #888;">
+                    <li><strong>NEURAL CALIBRATION MENU:</strong> Launched the comprehensive settings interface
+                        (neural-section-wrapper).</li>
+                    <li><strong>TRACKING OPTIMIZATION:</strong> Refined gesture recognition algorithms for reduced
+                        latency and higher accuracy.</li>
+                    <li><strong>HARDWARE PROFILING:</strong> Introduced "Performance Selector" (Low/Medium/High/Ultra).
+                    </li>
+                    <li><strong>OPTICAL CAPTURE:</strong> Added Screenshot/Snapshot functionality.</li>
+                    <li><strong>INTERFACE RECONFIGURATION:</strong> Added Layout Swap (Left/Right) for Camera & UI
+                        elements.</li>
+                </ul>
+            </div>
+
+            <!-- V1.1.3 -->
+            <div style="margin-bottom: 25px; border-left: 2px solid #666; padding-left: 15px;">
+                <h3 style="color: #999; border: none; margin: 0; font-size: 14px;">v1.1.3</h3>
+                <p style="margin-top: 5px; font-size: 11px; color: #888; letter-spacing: 1px;">VISUAL IDENTITY & SUPPORT
+                </p>
+                <ul class="sm-list" style="margin-top: 10px; list-style-type: square; color: #888;">
+                    <li><strong>UI OVERHAUL:</strong> Complete visual redesign including the new <strong>Landing
+                            Page</strong> interface and neon-cyberpunk design language.</li>
+                    <li>Deployed the <strong>ABOUT</strong>, <strong>HELP</strong>, <strong>SYSTEM LOGS</strong> and
+                        <strong>CONTACT</strong> overlays with interactive references.
+                    </li>
+                    <li><strong>ENVIRONMENTAL SENSING:</strong> Added Low Light Detection and real-time user warnings.
+                    </li>
+                </ul>
+            </div>
+
+            <!-- V1.1.0 -->
+            <div style="margin-bottom: 25px; border-left: 2px solid #444; padding-left: 15px;">
+                <h3 style="color: #888; border: none; margin: 0; font-size: 14px;">v1.1.0</h3>
+                <p style="margin-top: 5px; font-size: 11px; color: #666; letter-spacing: 1px;">THE "MODES" EXPANSION</p>
+                <ul class="sm-list" style="margin-top: 10px; list-style-type: square; color: #777;">
+                    <li><strong>SUPERNOVA PROTOCOL:</strong> Physics-based particle explosion logic.</li>
+                    <li><strong>STEALTH MODE:</strong> Low-latency pulsing light state.</li>
+                    <li><strong>VISUALIZER (MIC):</strong> Real-time microphone frequency analysis.</li>
+                    <li><strong>FACE GEOMETRY:</strong> Integrated FaceMesh for 3D coordinate mapping.</li>
+                </ul>
+            </div>
+
+            <!-- V1.0.0 -->
+            <div style="margin-bottom: 20px; border-left: 2px solid #333; padding-left: 15px; opacity: 0.6;">
+                <h3 style="color: #666; border: none; margin: 0; font-size: 14px;">v1.0.0</h3>
+                <p style="margin-top: 5px; font-size: 11px; color: #555; letter-spacing: 1px;">GENESIS BUILD</p>
+                <ul class="sm-list" style="margin-top: 10px; list-style-type: square; color: #666;">
+                    <li>Core Engine Initialization (Three.js/WebGL).</li>
+                    <li>Basic Gesture Recognition (MediaPipe Hands).</li>
+                    <li>Fundamental Shapes (Sphere, Cube, Galaxy).</li>
+                </ul>
+            </div>
+            <!-- SYSTEM LOG FOOTER -->
+            <div style="margin-top: 50px; margin-bottom: 10px;">
+                <div
+                    style="font-size: 9px; color: #444; letter-spacing: 3px; font-family: 'Courier New', monospace; margin-bottom: 5px;">
+                    [KERNEL_ID: 884-X] :: SYNC_COMPLETE
+                </div>
+                <div style="color: #00ffcc; font-size: 12px; letter-spacing: 1px; font-weight: bold;">
+                    > LOG SEQUENCE TERMINATED<span style="animation: blink-cursor 1s step-end infinite;">_</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: CONTACT -->
+    <div id="contact-overlay" class="modal-overlay">
+        <div class="close-modal" onclick="closeModal('contact-overlay')"
+            style="position:sticky; top:0px; float:right; margin-bottom:20px; z-index:100; background:rgba(0,0,0,0.5); border-radius:50%; width:30px; height:30px; display:flex; align-items:center; justify-content:center;">
+            ✕</div>
+        <div class="modal-content">
+            <h1>CONTACT UPLINK</h1>
+            <div
+                style="border: 1px solid #00ffcc; padding: 15px; background: rgba(0, 255, 204, 0.05); margin-bottom: 20px; text-align: left;">
+                <div style="font-size:10px; color:#00ffcc; letter-spacing: 2px; margin-bottom:5px;">OPERATOR IDENTITY
+                </div>
+                <div style="font-size:24px; color:#fff; font-weight:bold; text-transform: uppercase;">SYED FAIQ HUSSAIN
+                </div>
+                <div style="font-size:12px; color:#888; margin-top:5px;">STATUS: ONLINE</div>
+            </div>
+            <p>Establish connection via the following secure channels.</p>
+            <div class="contact-grid">
+                <a href="#" target="_blank" class="contact-btn">GITHUB REPOSITORY <span>→</span></a>
+                <a href="#" target="_blank" class="contact-btn">LINKEDIN PROFILE <span>→</span></a>
+                <a href="mailto:faiqsyed594@gmail.com" class="contact-btn">SEND TRANSMISSION (EMAIL) <span>→</span></a>
+            </div>
+            <p style="color:#00ffcc; margin-top:30px; font-size:12px;">> WAITING FOR INCOMING SIGNAL...</p>
+        </div>
+    </div>
+
+    <!-- MAIN UI LAYER -->
+    <div id="ui-layer">
+        <!-- DRAG AND DROP OVERLAY -->
+        <div id="drag-drop-overlay">
+            <div id="drag-drop-text">:: DROP AUDIO DATA ::</div>
+        </div>
+
+        <!-- HINTS & STATUS -->
+        <div id="start-hint">RAISE HAND TO ENGAGE</div>
+        <div id="hud-status">
+            <div class="hud-box">
+                <div class="label">DETECTED GESTURE</div>
+                <div id="gesture-display" class="value">NONE</div>
+            </div>
+            <div class="hud-box">
+                <div class="label">ACTIVE SHAPE</div>
+                <div id="shape-name" class="value">SPHERE</div>
+            </div>
+            <div id="low-light-warning">⚠️ LOW LIGHT DETECTED</div>
+        </div>
+
+        <!-- CONTROLS PANEL (RIGHT) -->
+        <div id="controls-panel" class="expanded">
+            <div id="panel-toggle" onclick="toggleMenu()">◀</div>
+            <div id="help-btn-trigger" onclick="openModal('help-overlay')">?</div>
+
+            <div class="cat-header">BASIC</div>
+            <div id="c-fist" class="ctrl-row">
+                <div class="c-text"><span class="c-name">FIST</span> : <span class="c-action">IDLE POSITION</span></div>
+                <div class="icon">✊</div>
+            </div>
+            <div id="c-open" class="ctrl-row">
+                <div class="c-text"><span class="c-name">OPEN</span> : <span class="c-action">ROTATE CAM</span></div>
+                <div class="icon">🖐</div>
+            </div>
+            <div id="c-zoom" class="ctrl-row">
+                <div class="c-text"><span class="c-name">2 HANDS</span> : <span class="c-action">ZOOM</span></div>
+                <div class="icon">👐</div>
+            </div>
+            <div id="c-peace" class="ctrl-row">
+                <div class="c-text"><span class="c-name">PEACE</span> : <span class="c-action">NEXT SHAPE</span></div>
+                <div class="icon">✌️</div>
+            </div>
+            <div id="c-three" class="ctrl-row">
+                <div class="c-text"><span class="c-name">3-FINGER</span> : <span class="c-action">TIME FREEZE</span>
+                </div>
+                <div class="icon"><img src="Emojis/3_finger_emoji.png" class="c-emoji1" alt=""></div>
+            </div>
+            <div id="c-pinch" class="ctrl-row">
+                <div class="c-text"><span class="c-name">PINCH</span> : <span class="c-action">IMPLODE</span></div>
+                <div class="icon"><img src="Emojis/pinch_emoji.png" class="c-emoji3" alt=""></div>
+            </div>
+            <div id="c-rock" class="ctrl-row">
+                <div class="c-text"><span class="c-name">ROCK</span> : <span class="c-action">EXPLODE</span></div>
+                <div class="icon">🤘</div>
+            </div>
+
+            <div class="cat-header">SPECIAL</div>
+            <div id="c-supernova" class="ctrl-row">
+                <div class="c-text"><span class="c-name">PINCH (HOLD)</span> : <span class="c-action">SUPERNOVA</span>
+                </div>
+                <div class="icon"><img src="Emojis/pinch_emoji.png" class="c-emoji3" alt=""></div>
+            </div>
+            <div id="c-shhh" class="ctrl-row">
+                <div class="c-text"><span class="c-name">INDEX TO LIP</span> : <span class="c-action">STEALTH</span>
+                </div>
+                <div class="icon">🤫</div>
+            </div>
+            <div id="c-mic" class="ctrl-row">
+                <div class="c-text"><span class="c-name">FIST TO MOUTH</span> : <span class="c-action">EQUALIZER</span>
+                </div>
+                <div class="icon"><img src="Emojis/fist_to_mouth_emoji.png" class="c-emoji2" alt=""></div>
+            </div>
+            <div id="c-thumb" class="ctrl-row">
+                <div class="c-text"><span class="c-name">THUMBS UP</span> : <span class="c-action">FACE SCAN</span>
+                </div>
+                <div class="icon">👍</div>
+            </div>
+        </div>
+
+        <!-- SCREENSHOT & SETTINGS TRIGGERS -->
+        <div id="screenshot-trigger" class="pos-right" onclick="takeScreenshot()">
+            <svg class="camera-icon" viewBox="0 0 24 24">
+                <path
+                    d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M20,4h-3.17L15,2H9L7.17,4H4C2.9,4,2,4.9,2,6v12c0,1.1,0.9,2,2,2h16c1.1,0,2-0.9,2-2V6C22,4.9,21.1,4,20,4z M20,18H4V6h4.05l1.83-2h4.24l1.83,2H20V18z" />
+            </svg>
+        </div>
+
+        <div id="settings-trigger" class="pos-right" onclick="openSettings()">
+            <svg class="gear-icon" viewBox="0 0 24 24">
+                <path
+                    d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.07-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.74,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.8,11.69,4.8,12s0.02,0.64,0.07,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.44-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.47-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z" />
+            </svg>
+        </div>
+
+        <!-- SETTINGS SIDEBAR -->
+        <div id="settings-panel">
+            <div class="close-modal" onclick="closeSettings()"
+                style="position:sticky; top:0; align-self:flex-end; z-index:200; cursor:pointer;">✕</div>
+            <div class="settings-header-row">
+                <div class="settings-help-btn" onclick="openHelpNeural()">?</div>
+            </div>
+            <h2>NEURAL CALIBRATION</h2>
+
+            <div class="s-header">SYSTEM CORE</div>
+            <div class="s-row">
+                <div class="s-label"><span>PERFORMANCE MODE</span></div>
+                <select id="i-perf" onchange="updateConfig('perf', this.value)">
+                    <option value="32000">ULTRA (32,000)</option>
+                    <option value="20000" selected>HIGH (20,000) - Recommended</option>
+                    <option value="12000">MEDIUM (12,000)</option>
+                    <option value="6000">LOW (6,000)</option>
+                </select>
+            </div>
+
+            <!-- PARTICLE SPECTRUM -->
+            <div class="s-row color-group-wrapper">
+                <div class="s-label"><span>PARTICLE SPECTRUM</span></div>
+                <div class="custom-color-wrapper" onclick="toggleColorConsole()">
+                    <div id="color-preview" class="color-preview-box" style="background-color: #0099ff;"></div>
+                </div>
+
+                <div id="cyber-color-console" class="cp-console">
+                    <div id="cp-presets-view">
+                        <div class="cp-title">COLOR PRESETS</div>
+                        <div class="color-swatches">
+                            <div class="swatch" style="background-color: #0099ff;" onclick="applyPreset('#0099ff')">
+                            </div>
+                            <div class="swatch" style="background-color: #ff0055;" onclick="applyPreset('#ff0055')">
+                            </div>
+                            <div class="swatch" style="background-color: #00ffcc;" onclick="applyPreset('#00ffcc')">
+                            </div>
+                            <div class="swatch" style="background-color: #9900ff;" onclick="applyPreset('#9900ff')">
+                            </div>
+                            <div class="swatch" style="background-color: #ffcc00;" onclick="applyPreset('#ffcc00')">
+                            </div>
+                        </div>
+                        <button class="cp-btn-custom" onclick="switchColorView('custom')">CUSTOM CONFIG [+]</button>
+                    </div>
+
+                    <div id="cp-custom-view" style="display:none;">
+                        <div class="cp-header-row">
+                            <div class="cp-title">SPECTRUM ANALYSIS</div>
+                            <div class="cp-back-btn" onclick="switchColorView('presets')">◀ BACK</div>
+                        </div>
+                        <div id="cp-sv-box" class="cp-sv-box">
+                            <div id="cp-sv-bg" class="cp-sv-bg"></div>
+                            <div id="cp-sv-white" class="cp-sv-overlay-white"></div>
+                            <div id="cp-sv-black" class="cp-sv-overlay-black"></div>
+                            <div id="cp-sv-handle" class="cp-sv-handle"></div>
+                        </div>
+                        <div class="cp-hue-row">
+                            <input type="range" id="cp-hue-slider" min="0" max="360" value="0"
+                                oninput="onHueChange(this.value)">
+                        </div>
+                        <div class="cp-inputs">
+                            <div class="cp-input-main">
+                                <label id="cp-mode-label" class="cp-mode-toggle" onclick="toggleInputMode()">HEX</label>
+                                <input type="text" id="cp-input-val" value="#0099FF"
+                                    onchange="onManualInput(this.value)">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MOTION BLUR -->
+            <div class="s-row">
+                <div class="s-label"><span>MOTION BLUR</span></div>
+                <div id="blur-toggle-btn" class="toggle-switch active" onclick="toggleBlur()">
+                    <div class="toggle-knob"></div>
+                    <div class="toggle-text">ON</div>
+                </div>
+            </div>
+
+            <div id="blur-intensity-container" class="slider-reveal-container active">
+                <div class="s-row" style="margin-bottom:0; padding-top: 5px;">
+                    <div class="s-label"><span>↳ BLUR INTENSITY</span><span id="v-blurStr">0.75</span></div>
+                    <input type="range" id="i-blurStr" min="0.1" max="0.95" step="0.05" value="0.75"
+                        oninput="updateConfig('blurStr', this.value)">
+                </div>
+            </div>
+
+            <div class="s-row">
+                <div class="s-label"><span>ROTATION SPEED</span><span id="v-rot">0.005</span></div>
+                <input type="range" id="i-rot" min="0" max="0.05" step="0.001" value="0.005"
+                    oninput="updateConfig('rot', this.value)">
+            </div>
+            <div class="s-row">
+                <div class="s-label"><span>OPEN HAND SENSITIVITY</span><span id="v-sens">2.5</span></div>
+                <input type="range" id="i-sens" min="0.5" max="5.0" step="0.1" value="2.5"
+                    oninput="updateConfig('sens', this.value)">
+            </div>
+            <div class="s-row">
+                <div class="s-label"><span>EXPLOSION SPEED</span><span id="v-rock">0.1</span></div>
+                <input type="range" id="i-rock" min="0.01" max="0.5" step="0.01" value="0.1"
+                    oninput="updateConfig('rock', this.value)">
+            </div>
+
+            <div class="s-header">SUPERNOVA PROTOCOL</div>
+            <div class="s-row">
+                <div class="s-label"><span>SUPERNOVA VIBRATION</span></div>
+                <div id="vib-toggle-btn" class="toggle-switch active" onclick="toggleVibration()">
+                    <div class="toggle-knob"></div>
+                    <div class="toggle-text">ON</div>
+                </div>
+            </div>
+            <div class="s-row">
+                <div class="s-label"><span>CHARGE TIME (S)</span><span id="v-charge">4.0</span></div>
+                <input type="range" id="i-charge" min="1.0" max="8.0" step="0.5" value="4.0"
+                    oninput="updateConfig('charge', this.value)">
+            </div>
+            <div class="s-row">
+                <div class="s-label"><span>SUPERNOVA FORCE</span><span id="v-sForce">4.0</span></div>
+                <input type="range" id="i-sForce" min="1.0" max="10.0" step="0.5" value="4.0"
+                    oninput="updateConfig('sForce', this.value)">
+            </div>
+
+            <div class="s-header">STEALTH CONFIG</div>
+            <div class="s-row">
+                <div class="s-label"><span>BASE DIMNESS</span><span id="v-sMin">0.05</span></div>
+                <input type="range" id="i-sMin" min="0" max="0.5" step="0.05" value="0.05"
+                    oninput="updateConfig('sMin', this.value)">
+            </div>
+            <div class="s-row">
+                <div class="s-label"><span>PULSE BRIGHTNESS</span><span id="v-sMax">0.5</span></div>
+                <input type="range" id="i-sMax" min="0.1" max="1.0" step="0.1" value="0.5"
+                    oninput="updateConfig('sMax', this.value)">
+            </div>
+            <div class="s-row">
+                <div class="s-label"><span>PULSE SPEED</span><span id="v-sSpeed">2</span></div>
+                <input type="range" id="i-sSpeed" min="0.5" max="10" step="0.5" value="2"
+                    oninput="updateConfig('sSpeed', this.value)">
+            </div>
+
+            <div class="s-header">AUDIO LINK</div>
+            <div class="s-row">
+                <div class="s-label"><span>UPLOAD AUDIO FILE</span></div>
+                <input type="file" id="audio-file-input" accept="audio/*" style="display: none;"
+                    onchange="handleAudioFileUpload(event)">
+                <button class="cyber-upload-btn" onclick="document.getElementById('audio-file-input').click()">
+                    <svg class="upload-icon" viewBox="0 0 24 24">
+                        <path d="M9 16h6v-6h4l-7-7-7 7h4zm-4 2h14v2H5z" />
+                    </svg>
+                    SELECT FILE
+                </button>
+            </div>
+            <div class="s-row">
+                <div class="s-label"><span>VISUALIZER HEIGHT</span><span id="v-audio">30</span></div>
+                <input type="range" id="i-audio" min="10" max="100" step="5" value="30"
+                    oninput="updateConfig('audio', this.value)">
+            </div>
+            <div class="s-row">
+                <div class="s-label"><span>VISUALIZER ROTATION</span><span id="v-audioRot">0.2</span></div>
+                <input type="range" id="i-audioRot" min="0.0" max="1.0" step="0.05" value="0.2"
+                    oninput="updateConfig('audioRot', this.value)">
+            </div>
+            <div class="s-row">
+                <div class="s-label"><span>BAR COUNT</span><span id="v-aBars">128</span></div>
+                <input type="range" id="i-aBars" min="32" max="256" step="16" value="128"
+                    oninput="updateConfig('aBars', this.value)">
+            </div>
+            <div class="s-row">
+                <div class="s-label"><span>VISUALIZER SMOOTHNESS</span><span id="v-aSmooth">0.85</span></div>
+                <input type="range" id="i-aSmooth" min="0.1" max="1" step="0.05" value="0.85"
+                    oninput="updateConfig('aSmooth', this.value)">
+            </div>
+
+            <div class="s-header">FACE GEOMETRY</div>
+            <div class="s-row">
+                <div class="s-label"><span>X OFFSET (L/R)</span><span id="v-x">10</span></div>
+                <input type="range" id="i-x" min="-50" max="50" step="1" value="10"
+                    oninput="updateConfig('x', this.value)">
+            </div>
+            <div class="s-row">
+                <div class="s-label"><span>Y OFFSET (U/D)</span><span id="v-y">35</span></div>
+                <input type="range" id="i-y" min="-50" max="100" step="1" value="35"
+                    oninput="updateConfig('y', this.value)">
+            </div>
+            <div class="s-row">
+                <div class="s-label"><span>FACE SCALE (ZOOM)</span><span id="v-scale">200</span></div>
+                <input type="range" id="i-scale" min="100" max="400" step="10" value="200"
+                    oninput="updateConfig('scale', this.value)">
+            </div>
+            <div class="s-row">
+                <div class="s-label"><span>FACE ROTATION (YAW)</span><span id="v-faceRot">-0.1</span></div>
+                <input type="range" id="i-faceRot" min="-1.5" max="1.5" step="0.1" value="-0.1"
+                    oninput="updateConfig('faceRot', this.value)">
+            </div>
+
+            <button id="reset-btn" onclick="resetConfig()">RESET DEFAULTS</button>
+        </div>
+
+        <!-- MOVABLE CAMERA -->
+        <div id="cam-container" class="pos-left">
+            <div id="cam-view">
+                <div id="cam-swap-btn" onclick="toggleCamPos()">⇄</div>
+                <video id="input-video" playsinline muted></video>
+            </div>
+        </div>
+    </div>
+
+    <!-- CANVAS LAYERS -->
+    <canvas id="color-canvas" width="320" height="240" style="display:none;"></canvas>
+
+    <!-- SCRIPTS -->
+    <script src="js/state.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/core.js"></script>
+    <script src="js/input.js"></script>
+    <script src="js/app.js"></script>
+</body>
+
+</html>
