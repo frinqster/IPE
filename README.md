@@ -136,7 +136,7 @@ The system includes a built-in **Neural Calibration Menu** (Click the ⚙️ Gea
 *   **"Permission Denied":** Ensure you have allowed Camera and Microphone access in your browser settings.
 *   **Low FPS:** Open the settings menu and switch Performance Mode to "Low" or "Medium". Turn off Motion Blur.
 *   **Gestures Not Working:** Ensure your hand is well-lit and your palm is facing the camera.
-*   **More FAQs:** For a complete list of common issues and detailed solutions, please consult the **SYSTEM MANUAL** located in the **HELP** menu of the live website.
+*   **More FAQs:** For a complete list of common issues and detailed solutions, please consult the **SYSTEM MANUAL** located in the **HELP** modal overlay of the live website.
 
 ---
 
