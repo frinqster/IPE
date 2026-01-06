@@ -1,6 +1,6 @@
 # INTERACTIVE PARTICLE ENGINE [IPE] v1.2
 
-![Project Banner](Logo/social-preview.jpg)
+![Project Banner](Assets/Logo/social-preview.jpg)
 
 > **A Gesture-Controlled 3D Interface.**  
 > Control up to 32,000 particles with your hands directly in the browser using WebGL and Computer Vision.
