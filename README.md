@@ -12,19 +12,19 @@
 ---
 
 ## 📑 TABLE OF CONTENTS
-1. [System Overview](#-system-overview)
-2. [Live Demo](#-live-demo)
-3. [Documentation](#-documentation)
-4. [Gesture Controls](#-gesture-controls)
-5. [Tech Stack](#-tech-stack)
-6. [Installation & Setup](#-installation--setup)
-7. [Configuration](#-configuration)
-8. [Troubleshooting](#-troubleshooting)
-9. [Author](#-author)
+1. [System Overview](#system-overview)
+2. [Live Demo](#live-demo)
+3. [Documentation](#documentation)
+4. [Gesture Controls](#gesture-controls)
+5. [Tech Stack](#tech-stack)
+6. [Installation & Setup](#installation-setup)
+7. [Configuration](#configuration)
+8. [Troubleshooting](#troubleshooting)
+9. [Author](#author)
 
 ---
 
-## ⚡ SYSTEM OVERVIEW
+## <a id="system-overview"></a>⚡ SYSTEM OVERVIEW
 
 The **Interactive Particle Engine (IPE)** is an advanced experiment in spatial UI and generative art. It leverages **Three.js** for high-performance WebGL rendering and **MediaPipe** for real-time, client-side hand and face tracking.
 
@@ -43,7 +43,7 @@ The system maps physical movements to a digital particle cloud, allowing users t
 
 ---
 
-## 🌐 LIVE DEMO
+## <a id="live-demo"></a>🌐 LIVE DEMO
 
 *   **Primary Link:** [project-ipe.netlify.app](https://project-ipe.netlify.app/)
 *   **Alternative Link:** [frinqster.github.io/IPE](https://frinqster.github.io/IPE)
@@ -52,7 +52,7 @@ The system maps physical movements to a digital particle cloud, allowing users t
 
 ---
 
-## 📄 DOCUMENTATION
+## <a id="documentation"></a>📄 DOCUMENTATION
 
 For a deep dive into the system architecture, mathematical models, and operational logic, please refer to the official technical documentation included in the repository:
 
@@ -60,7 +60,7 @@ For a deep dive into the system architecture, mathematical models, and operation
 
 ---
 
-## 🎮 GESTURE CONTROLS
+## <a id="gesture-controls"></a>🎮 GESTURE CONTROLS
 
 The system is controlled entirely by hand movements. Ensure your hand is visible and the lighting is good.
 
@@ -76,11 +76,10 @@ The system is controlled entirely by hand movements. Ensure your hand is visible
 | **👍 THUMBS UP** | **FACE SCAN** | Maps the particle cloud to your face geometry. |
 | **👊 FIST TO MOUTH** | **MIC VISUALIZER** | Activates microphone-based frequency bars. |
 | **👌 PINCH (HOLD)** | **SUPERNOVA** | Charge up for 4 seconds to trigger a massive explosion. |
-| **👆 'L' SHAPE** | **???** | Secret Interaction. |
 
 ---
 
-## 🛠 TECH STACK
+## <a id="tech-stack"></a>🛠 TECH STACK
 
 *   **Core:** HTML5, CSS3, Vanilla JavaScript (ES6+)
 *   **Rendering Engine:** [Three.js (r128)](https://threejs.org/)
@@ -90,7 +89,7 @@ The system is controlled entirely by hand movements. Ensure your hand is visible
 
 ---
 
-## 🚀 INSTALLATION & SETUP
+## <a id="installation-setup"></a>🚀 INSTALLATION & SETUP
 
 To run this project locally on your machine:
 
@@ -119,7 +118,7 @@ To run this project locally on your machine:
 
 ---
 
-## ⚙️ CONFIGURATION
+## <a id="configuration"></a>⚙️ CONFIGURATION
 
 The system includes a built-in **Neural Calibration Menu** (Click the ⚙️ Gear icon in the bottom right).
 
@@ -131,7 +130,7 @@ The system includes a built-in **Neural Calibration Menu** (Click the ⚙️ Gea
 
 ---
 
-## ⚠️ TROUBLESHOOTING
+## <a id="troubleshooting"></a>⚠️ TROUBLESHOOTING
 
 *   **"Permission Denied":** Ensure you have allowed Camera and Microphone access in your browser settings.
 *   **Low FPS:** Open the settings menu and switch Performance Mode to "Low" or "Medium". Turn off Motion Blur.
@@ -140,7 +139,7 @@ The system includes a built-in **Neural Calibration Menu** (Click the ⚙️ Gea
 
 ---
 
-## 👨‍💻 AUTHOR
+## <a id="author"></a>👨‍💻 AUTHOR
 
 **Syed Faiq Hussain**
 
