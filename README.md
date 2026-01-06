@@ -119,7 +119,7 @@ The system is controlled entirely by hand movements. Ensure your hand is visible
       <td valign="middle">Maps the particle cloud to your face geometry.</td>
     </tr>
     <tr>
-      <td valign="middle"><strong><img src="Assets/Emojis/fist_to_mouth_emoji.png" height="22" valign="middle"> FIST TO MOUTH</strong></td>
+      <td valign="middle"><strong><img src="Assets/Emojis/fist_to_mouth_emoji.png" height="23" valign="middle"> FIST TO MOUTH</strong></td>
       <td valign="middle"><strong>MIC VISUALIZER</strong></td>
       <td valign="middle">Activates microphone-based frequency bars.</td>
     </tr>
