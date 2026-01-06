@@ -109,14 +109,14 @@ The system is controlled entirely by hand movements. Ensure your hand is visible
       <td valign="middle">Scatters particles chaotically.</td>
     </tr>
     <tr>
+      <td valign="middle"><strong><img src="Assets/Emojis/pinch_emoji.png" height="20" valign="middle"> PINCH (HOLD)</strong></td>
+      <td valign="middle"><strong>SUPERNOVA</strong></td>
+      <td valign="middle">Charge up for 4 seconds to trigger a massive explosion.</td>
+    </tr>
+    <tr>
       <td valign="middle"><strong>🤫 INDEX TO LIP</strong></td>
       <td valign="middle"><strong>STEALTH MODE</strong></td>
       <td valign="middle">Dims lights and activates pulsing silent mode.</td>
-    </tr>
-    <tr>
-      <td valign="middle"><strong>👍 THUMBS UP</strong></td>
-      <td valign="middle"><strong>FACE SCAN</strong></td>
-      <td valign="middle">Maps the particle cloud to your face geometry.</td>
     </tr>
     <tr>
       <td valign="middle"><strong><img src="Assets/Emojis/fist_to_mouth_emoji.png" height="23" valign="middle"> FIST TO MOUTH</strong></td>
@@ -124,14 +124,14 @@ The system is controlled entirely by hand movements. Ensure your hand is visible
       <td valign="middle">Activates microphone-based frequency bars.</td>
     </tr>
     <tr>
-      <td valign="middle"><strong><img src="Assets/Emojis/pinch_emoji.png" height="20" valign="middle"> PINCH (HOLD)</strong></td>
-      <td valign="middle"><strong>SUPERNOVA</strong></td>
-      <td valign="middle">Charge up for 4 seconds to trigger a massive explosion.</td>
+      <td valign="middle"><strong>👍 THUMBS UP</strong></td>
+      <td valign="middle"><strong>FACE SCAN</strong></td>
+      <td valign="middle">Maps the particle cloud to your face geometry.</td>
     </tr>
   </tbody>
 </table>
 
-> **ℹ️ NOTE:** For visual references (images/videos) and more detailed explanations of each interaction, please consult the **SYSTEM MANUAL** located inside the **HELP** menu on the website.
+> **ℹ️ NOTE:** For visual references and more detailed explanations of each interaction, please consult the **SYSTEM MANUAL** located inside the **HELP** modal overlay on the website.
 
 ---
 
