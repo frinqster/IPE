@@ -70,13 +70,13 @@ The system is controlled entirely by hand movements. Ensure your hand is visible
 | **🖐 OPEN HAND** | **ROTATE CAMERA** | Move your hand to look around the 3D scene. |
 | **👐 TWO HANDS** | **ZOOM** | Move hands apart to zoom in, close to zoom out. |
 | **✌️ PEACE SIGN** | **NEXT SHAPE** | Cycles through 3D forms (Sphere, Cube, Galaxy, Human, etc.). |
-| **<img src="Assets/Emojis/3_finger_emoji.png" height="25"> 3-FINGER** | **TIME FREEZE** | Pauses particle movement. (Play/Pause in File Mode). |
-| **<img src="Assets/Emojis/pinch_emoji.png" height="25"> PINCH** | **IMPLODE** | Collapses particles to the center. |
+| **<img src="Assets/Emojis/3_finger_emoji.png" height="21" align="middle"> 3-FINGER** | **TIME FREEZE** | Pauses particle movement. (Play/Pause in File Mode). |
+| **<img src="Assets/Emojis/pinch_emoji.png" height="20" align="middle"> PINCH** | **IMPLODE** | Collapses particles to the center. |
 | **🤘 ROCK ON** | **EXPLODE** | Scatters particles chaotically. |
 | **🤫 INDEX TO LIP** | **STEALTH MODE** | Dims lights and activates pulsing silent mode. |
 | **👍 THUMBS UP** | **FACE SCAN** | Maps the particle cloud to your face geometry. |
-| **<img src="Assets/Emojis/fist_to_mouth_emoji.png" height="25"> FIST TO MOUTH** | **MIC VISUALIZER** | Activates microphone-based frequency bars. |
-| **<img src="Assets/Emojis/pinch_emoji.png" height="25"> PINCH (HOLD)** | **SUPERNOVA** | Charge up for 4 seconds to trigger a massive explosion. |
+| **<img src="Assets/Emojis/fist_to_mouth_emoji.png" height="19" align="middle"> FIST TO MOUTH** | **MIC VISUALIZER** | Activates microphone-based frequency bars. |
+| **<img src="Assets/Emojis/pinch_emoji.png" height="20" align="middle"> PINCH (HOLD)** | **SUPERNOVA** | Charge up for 4 seconds to trigger a massive explosion. |
 
 > **ℹ️ NOTE:** For visual references (images/videos) and more detailed explanations of each interaction, please consult the **SYSTEM MANUAL** located inside the **HELP** modal overlay on the website.
 
