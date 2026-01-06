@@ -614,12 +614,12 @@ canvas {
 
 /* Control Panel Emojis */
 .c-emoji1 { width: 20px; height: 20px; object-fit: contain; }
-.c-emoji2 { width: 28px; height: 30px; object-fit: contain; }
+.c-emoji2 { width: 20px; height: 20px; object-fit: contain; }
 .c-emoji3 { width: 20px; height: 20px; object-fit: contain; }
 
 /* System Manual Emojis */
 .s-emoji1 { width: 17px; height: 17px; object-fit: contain; vertical-align: middle; }
-.s-emoji2 { width: 23px; height: 23px; object-fit: contain; vertical-align: middle; }
+.s-emoji2 { width: 16px; height: 16px; object-fit: contain; vertical-align: middle; }
 .s-emoji3 { width: 16px; height: 16px; object-fit: contain; vertical-align: middle; }
 
 /* --- MODAL OVERLAYS (Help, About, etc.) --- */
