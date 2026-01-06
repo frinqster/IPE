@@ -5,11 +5,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Interactive Particle Engine v1.2</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
 
     <!-- FAVICON & METADATA -->
-    <link rel="icon" type="image/png" href="Logo/favicon.png">
-    <link rel="apple-touch-icon" href="Logo/favicon.png">
+    <link rel="icon" type="image/png" href="Assets/Logo/favicon.png">
+    <link rel="apple-touch-icon" href="Assets/Logo/favicon.png">
 
     <!-- OPEN GRAPH / SOCIAL PREVIEW -->
     <meta name="title" content="Interactive Particle Engine [IPE] v1.2">
@@ -21,7 +21,7 @@
     <meta property="og:title" content="Interactive Particle Engine [IPE] v1.2">
     <meta property="og:description"
         content="A Gesture Controlled 3D Interface. Control 32,000 particles with your hands directly in the browser.">
-    <meta property="og:image" content="https://project-ipe.netlify.app/Logo/social-preview.jpg">
+    <meta property="og:image" content="https://project-ipe.netlify.app/Assets/Logo/social-preview.jpg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
 
@@ -30,7 +30,7 @@
     <meta property="twitter:title" content="Interactive Particle Engine [IPE] v1.2">
     <meta property="twitter:description"
         content="A Gesture Controlled 3D Interface. Control 32,000 particles with your hands directly in the browser.">
-    <meta property="twitter:image" content="https://project-ipe.netlify.app/Logo/social-preview.jpg">
+    <meta property="twitter:image" content="https://project-ipe.netlify.app/Assets/Logo/social-preview.jpg">
 
     <meta name="theme-color" content="#00ffcc">
 
@@ -59,7 +59,7 @@
         <!-- NAVBAR -->
         <nav class="l-navbar" style="padding: 30px 20px;">
             <div class="l-nav-brand" style="flex-direction: row; align-items: center; gap: 15px;">
-                <img src="Logo/favicon.png" alt="IPE Logo" style="height: 45px; width: auto;">
+                <img src="Assets/Logo/favicon.png" alt="IPE Logo" style="height: 45px; width: auto;">
                 <div style="display: flex; flex-direction: column;">
                     <div>
                         <span>INTERACTIVE PARTICLE ENGINE</span>
@@ -170,7 +170,7 @@
                         </div>
                         <span class="g-desc">Returns the particle system to default state.</span>
                         <span class="g-how">Make a FIST ✊</span>
-                        <div class="g-ref-container"><img src="References/fist.png" class="g-ref-img" alt="Reference">
+                        <div class="g-ref-container"><img src="Assets/References/fist.png" class="g-ref-img" alt="Reference">
                         </div>
                     </div>
                     <!-- BACK FACE -->
@@ -189,7 +189,7 @@
                         </div>
                         <span class="g-desc">Emergency override to exit ANY active mode instantly.</span>
                         <span class="g-how">Make a FIST ✊</span>
-                        <div class="g-ref-container"><img src="References/fist.png" class="g-ref-img" alt="Reference">
+                        <div class="g-ref-container"><img src="Assets/References/fist.png" class="g-ref-img" alt="Reference">
                         </div>
                     </div>
                 </div>
@@ -198,7 +198,7 @@
                     <div class="g-header"><span class="g-title">CAMERA ROTATE</span><span class="g-arrow">▼</span></div>
                     <span class="g-desc">Manually look around the scene.</span>
                     <span class="g-how">OPEN HAND 🖐 and drag.</span>
-                    <div class="g-ref-container"><img src="References/open.png" class="g-ref-img" alt="Reference"></div>
+                    <div class="g-ref-container"><img src="Assets/References/open.png" class="g-ref-img" alt="Reference"></div>
                 </div>
 
                 <!-- CAROUSEL: ZOOM -->
@@ -209,7 +209,7 @@
                     <div class="g-ref-container">
                         <div class="carousel-container">
                             <div class="carousel-btn prev-btn" onclick="changeSlide(event, 'zoom', -1)">❮</div>
-                            <img id="ref-zoom" src="References/zoom1.png" class="g-ref-img" alt="Reference">
+                            <img id="ref-zoom" src="Assets/References/zoom1.png" class="g-ref-img" alt="Reference">
                             <div id="cap-zoom" class="carousel-caption">HAND POSITION REFERENCE</div>
                             <div class="carousel-btn next-btn" onclick="changeSlide(event, 'zoom', 1)">❯</div>
                         </div>
@@ -220,7 +220,7 @@
                     <div class="g-header"><span class="g-title">NEXT SHAPE</span><span class="g-arrow">▼</span></div>
                     <span class="g-desc">Cycles to the next 3D object.</span>
                     <span class="g-how">Make a PEACE Sign ✌️</span>
-                    <div class="g-ref-container"><img src="References/peace.png" class="g-ref-img" alt="Reference">
+                    <div class="g-ref-container"><img src="Assets/References/peace.png" class="g-ref-img" alt="Reference">
                     </div>
                 </div>
 
@@ -241,9 +241,9 @@
                             </div>
                         </div>
                         <span class="g-desc">Pauses particle's idle movement.</span>
-                        <span class="g-how">Put up 3-FINGERS <img src="Emojis/3_finger_emoji.png" class="s-emoji1"
+                        <span class="g-how">Put up 3-FINGERS <img src="Assets/Emojis/3_finger_emoji.png" class="s-emoji1"
                                 alt=""></span>
-                        <div class="g-ref-container"><img src="References/three.png" class="g-ref-img" alt="Reference">
+                        <div class="g-ref-container"><img src="Assets/References/three.png" class="g-ref-img" alt="Reference">
                         </div>
                     </div>
                     <!-- BACK FACE -->
@@ -262,9 +262,9 @@
                         </div>
                         <span class="g-desc">Toggles PLAY / PAUSE during <span class="text-link"
                                 onclick="jumpToVisualizerFile(event)">VISUALIZER (FILE)</span> mode.</span>
-                        <span class="g-how">Put up 3-FINGERS <img src="Emojis/3_finger_emoji.png" class="s-emoji1"
+                        <span class="g-how">Put up 3-FINGERS <img src="Assets/Emojis/3_finger_emoji.png" class="s-emoji1"
                                 alt=""></span>
-                        <div class="g-ref-container"><img src="References/three.png" class="g-ref-img" alt="Reference">
+                        <div class="g-ref-container"><img src="Assets/References/three.png" class="g-ref-img" alt="Reference">
                         </div>
                     </div>
                 </div>
@@ -273,12 +273,12 @@
                 <div class="gesture-item" id="g-item-pinch" onclick="toggleRef(this)">
                     <div class="g-header"><span class="g-title">IMPLODE</span><span class="g-arrow">▼</span></div>
                     <span class="g-desc">Collapses particles to center.</span>
-                    <span class="g-how">PINCH using your whole hand <img src="Emojis/pinch_emoji.png" class="s-emoji3"
+                    <span class="g-how">PINCH using your whole hand <img src="Assets/Emojis/pinch_emoji.png" class="s-emoji3"
                             alt=""></span>
                     <div class="g-ref-container">
                         <div class="carousel-container">
                             <div class="carousel-btn prev-btn" onclick="changeSlide(event, 'pinch', -1)">❮</div>
-                            <img id="ref-pinch" src="References/pinch1.png" class="g-ref-img" alt="Reference">
+                            <img id="ref-pinch" src="Assets/References/pinch1.png" class="g-ref-img" alt="Reference">
                             <div id="cap-pinch" class="carousel-caption">FRONT VIEW</div>
                             <div class="carousel-btn next-btn" onclick="changeSlide(event, 'pinch', 1)">❯</div>
                         </div>
@@ -292,7 +292,7 @@
                     <div class="g-ref-container">
                         <div class="carousel-container">
                             <div class="carousel-btn prev-btn" onclick="changeSlide(event, 'rock', -1)">❮</div>
-                            <img id="ref-rock" src="References/rock1.png" class="g-ref-img" alt="Reference">
+                            <img id="ref-rock" src="Assets/References/rock1.png" class="g-ref-img" alt="Reference">
                             <div id="cap-rock" class="carousel-caption">VERSION A</div>
                             <div class="carousel-btn next-btn" onclick="changeSlide(event, 'rock', 1)">❯</div>
                         </div>
@@ -305,7 +305,7 @@
                             class="g-arrow">▼</span></div>
                     <span class="g-desc">Hard to believe but here's your reward.</span>
                     <span class="g-how">Make an 'L' shape 👆</span>
-                    <div class="g-ref-container"><img src="References/secret.png" class="g-ref-img" alt="Reference">
+                    <div class="g-ref-container"><img src="Assets/References/secret.png" class="g-ref-img" alt="Reference">
                     </div>
                 </div>
 
@@ -327,11 +327,11 @@
                     <span class="g-desc">Charge explosion.</span>
                     <span class="g-how">HOLD <span class="text-link"
                             onclick="jumpToGesture(event, 'g-item-pinch')">PINCH</span> <img
-                            src="Emojis/pinch_emoji.png" class="s-emoji3" alt=""> for 4 seconds.</span>
+                            src="Assets/Emojis/pinch_emoji.png" class="s-emoji3" alt=""> for 4 seconds.</span>
                     <div class="g-ref-container">
                         <div class="carousel-container">
                             <div class="carousel-btn prev-btn" onclick="changeSlide(event, 'supernova', -1)">❮</div>
-                            <img id="ref-supernova" src="References/pinch1.png" class="g-ref-img" alt="Reference">
+                            <img id="ref-supernova" src="Assets/References/pinch1.png" class="g-ref-img" alt="Reference">
                             <div id="cap-supernova" class="carousel-caption">FRONT VIEW</div>
                             <div class="carousel-btn next-btn" onclick="changeSlide(event, 'supernova', 1)">❯</div>
                         </div>
@@ -342,7 +342,7 @@
                     <div class="g-header"><span class="g-title">STEALTH MODE</span><span class="g-arrow">▼</span></div>
                     <span class="g-desc">Dims lights and particles pulse.</span>
                     <span class="g-how">Put your INDEX FINGER to LIPS (Shhh) 🤫</span>
-                    <div class="g-ref-container"><img src="References/shhh.png" class="g-ref-img" alt="Reference"></div>
+                    <div class="g-ref-container"><img src="Assets/References/shhh.png" class="g-ref-img" alt="Reference"></div>
                 </div>
 
                 <!-- FLIPPABLE: AUDIO LINK -->
@@ -363,12 +363,12 @@
                             </div>
                         </div>
                         <span class="g-desc">Microphone reactive frequency bars.</span>
-                        <span class="g-how">Hold your FIST near MOUTH <img src="Emojis/fist_to_mouth_emoji.png"
+                        <span class="g-how">Hold your FIST near MOUTH <img src="Assets/Emojis/fist_to_mouth_emoji.png"
                                 class="s-emoji2" alt=""></span>
                         <div class="g-ref-container">
                             <div class="carousel-container">
                                 <div class="carousel-btn prev-btn" onclick="changeSlide(event, 'mic', -1)">❮</div>
-                                <img id="ref-mic" src="References/mic1.png" class="g-ref-img" alt="Reference">
+                                <img id="ref-mic" src="Assets/References/mic1.png" class="g-ref-img" alt="Reference">
                                 <div id="cap-mic" class="carousel-caption">FRONT VIEW</div>
                                 <div class="carousel-btn next-btn" onclick="changeSlide(event, 'mic', 1)">❯</div>
                             </div>
@@ -403,7 +403,7 @@
                     <div class="g-header"><span class="g-title">FACE SCAN</span><span class="g-arrow">▼</span></div>
                     <span class="g-desc">Maps particles to your face in 3D.</span>
                     <span class="g-how">Put up a THUMBS UP 👍</span>
-                    <div class="g-ref-container"><img src="References/thumb.png" class="g-ref-img" alt="Reference">
+                    <div class="g-ref-container"><img src="Assets/References/thumb.png" class="g-ref-img" alt="Reference">
                     </div>
                 </div>
             </div>
@@ -661,7 +661,7 @@
                 For a detailed exploration of the Interactive Particle Engine's design, algorithms, and implementation,
                 download the official:
                 <br>
-                <a href="IPE Documentation.pdf" download="IPE_DOCUMENTATION.pdf"
+                <a href="Docs/IPE Documentation.pdf" download="IPE_DOCUMENTATION.pdf"
                     class="contact-btn"
                     style="display:inline-flex; width:auto; margin-top:15px; font-size:1em; padding:10px 25px; align-items:center;">
                     <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"
@@ -809,9 +809,9 @@
             </div>
             <p>Establish connection via the following secure channels.</p>
             <div class="contact-grid">
-                <a href="#" target="_blank" class="contact-btn">GITHUB REPOSITORY <span>→</span></a>
+                <a href="https://github.com/frinqster/IPE" target="_blank" class="contact-btn">GITHUB REPOSITORY <span>→</span></a>
                 <a href="#" target="_blank" class="contact-btn">LINKEDIN PROFILE <span>→</span></a>
-                <a href="mailto:faiqsyed594@gmail.com" class="contact-btn">SEND TRANSMISSION (EMAIL) <span>→</span></a>
+                <a href="mailto:faiqsyed594@gmail.com" target="_blank" class="contact-btn">SEND TRANSMISSION (EMAIL) <span>→</span></a>
             </div>
             <p style="color:#00ffcc; margin-top:30px; font-size:12px;">> WAITING FOR INCOMING SIGNAL...</p>
         </div>
@@ -863,11 +863,11 @@
             <div id="c-three" class="ctrl-row">
                 <div class="c-text"><span class="c-name">3-FINGER</span> : <span class="c-action">TIME FREEZE</span>
                 </div>
-                <div class="icon"><img src="Emojis/3_finger_emoji.png" class="c-emoji1" alt=""></div>
+                <div class="icon"><img src="Assets/Emojis/3_finger_emoji.png" class="c-emoji1" alt=""></div>
             </div>
             <div id="c-pinch" class="ctrl-row">
                 <div class="c-text"><span class="c-name">PINCH</span> : <span class="c-action">IMPLODE</span></div>
-                <div class="icon"><img src="Emojis/pinch_emoji.png" class="c-emoji3" alt=""></div>
+                <div class="icon"><img src="Assets/Emojis/pinch_emoji.png" class="c-emoji3" alt=""></div>
             </div>
             <div id="c-rock" class="ctrl-row">
                 <div class="c-text"><span class="c-name">ROCK</span> : <span class="c-action">EXPLODE</span></div>
@@ -878,7 +878,7 @@
             <div id="c-supernova" class="ctrl-row">
                 <div class="c-text"><span class="c-name">PINCH (HOLD)</span> : <span class="c-action">SUPERNOVA</span>
                 </div>
-                <div class="icon"><img src="Emojis/pinch_emoji.png" class="c-emoji3" alt=""></div>
+                <div class="icon"><img src="Assets/Emojis/pinch_emoji.png" class="c-emoji3" alt=""></div>
             </div>
             <div id="c-shhh" class="ctrl-row">
                 <div class="c-text"><span class="c-name">INDEX TO LIP</span> : <span class="c-action">STEALTH</span>
@@ -888,7 +888,7 @@
             <div id="c-mic" class="ctrl-row">
                 <div class="c-text"><span class="c-name">FIST TO MOUTH</span> : <span class="c-action">EQUALIZER</span>
                 </div>
-                <div class="icon"><img src="Emojis/fist_to_mouth_emoji.png" class="c-emoji2" alt=""></div>
+                <div class="icon"><img src="Assets/Emojis/fist_to_mouth_emoji.png" class="c-emoji2" alt=""></div>
             </div>
             <div id="c-thumb" class="ctrl-row">
                 <div class="c-text"><span class="c-name">THUMBS UP</span> : <span class="c-action">FACE SCAN</span>
