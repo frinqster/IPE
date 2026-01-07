@@ -45,8 +45,9 @@ The system maps physical movements to a digital particle cloud, allowing users t
 
 ## <a id="live-demo"></a>🌐 LIVE DEMO
 
-*   **Primary Link:** [project-ipe.netlify.app](https://project-ipe.netlify.app/)
-*   **Alternative Link:** [frinqster.github.io/IPE](https://frinqster.github.io/IPE)
+*   **Primary Link:** [project-ipe.vercel.app](https://project-ipe.vercel.app)
+*   **Mirror Link:** [project-ipe.netlify.app](https://project-ipe.netlify.app/)
+*   **Fallback Link:** [frinqster.github.io/IPE](https://frinqster.github.io/IPE)
 
 *(Note: Requires Camera & Microphone access)*
 
