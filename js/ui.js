@@ -13,12 +13,36 @@ function typeWriter() {
 window.onload = typeWriter;
 
 // --- PERFORMANCE SELECTOR UI ---
+// --- PERFORMANCE SELECTOR UI ---
 function showPerfSelector() {
-    document.getElementById('init-btn').style.display = 'none';
-    document.getElementById('perf-selector').style.display = 'flex';
-    perfSelectionIndex = 1;
-    updatePerfVisuals();
-    document.addEventListener('keydown', handlePerfKey);
+    const btn = document.getElementById('init-btn');
+    btn.classList.add('l-btn-exit');
+
+    // Wait for exit animation
+    setTimeout(() => {
+        btn.style.display = 'none';
+        const selector = document.getElementById('perf-selector');
+        selector.style.display = 'flex';
+
+        // Staggered Entrance
+        const options = document.querySelectorAll('.perf-option');
+        options.forEach((opt, index) => {
+            setTimeout(() => {
+                opt.style.opacity = '1';
+                opt.classList.add('animate-in');
+
+                // Remove animation class after completion to unlock hover transform
+                setTimeout(() => {
+                    opt.classList.remove('animate-in');
+                    opt.classList.add('visible');
+                }, 500);
+            }, index * 100);
+        });
+
+        perfSelectionIndex = 1;
+        updatePerfVisuals();
+        document.addEventListener('keydown', handlePerfKey);
+    }, 400);
 }
 
 function handlePerfKey(e) {
@@ -55,12 +79,12 @@ function toggleNc(el) { el.classList.toggle('active'); }
 // --- FLIP CARD LOGIC ---
 function flipCard(event, btn) {
     event.stopPropagation();
-    
+
     const container = btn.closest('.gesture-flip-container');
     const items = container.querySelectorAll('.gesture-item');
     const item1 = items[0];
     const item2 = items[1];
-    
+
     // Determine which side is active
     let activeItem, nextItem;
     if (item1.style.display !== 'none') {
@@ -70,20 +94,20 @@ function flipCard(event, btn) {
         activeItem = item2;
         nextItem = item1;
     }
-    
+
     const wasActive = activeItem.classList.contains('active');
 
     // Animate out
     activeItem.classList.add('gesture-flip-anim-out');
-    
+
     setTimeout(() => {
         activeItem.style.display = 'none';
         activeItem.classList.remove('gesture-flip-anim-out');
-        
+
         // Animate in
         nextItem.style.display = 'block';
         nextItem.classList.add('gesture-flip-anim-in');
-        
+
         // Maintain expanded state
         if (wasActive) {
             nextItem.classList.add('active');
@@ -111,7 +135,7 @@ function jumpToVisualizerFile(event) {
     if (front.style.display !== 'none') {
         const btn = front.querySelector('.flip-btn');
         if (btn) {
-            const fakeEvent = { stopPropagation: () => {} };
+            const fakeEvent = { stopPropagation: () => { } };
             flipCard(fakeEvent, btn);
         }
     }
@@ -140,7 +164,7 @@ function highlightAudioSettings(event) {
         }
 
         setTimeout(() => {
-            if(audioInputLi) {
+            if (audioInputLi) {
                 audioInputLi.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 audioInputLi.classList.add('highlight-flash');
                 setTimeout(() => audioInputLi.classList.remove('highlight-flash'), 2000);
@@ -153,7 +177,7 @@ function toggleCamPos() {
     const el = document.getElementById('cam-container');
     const setEl = document.getElementById('settings-trigger');
     const screenEl = document.getElementById('screenshot-trigger');
-    
+
     if (el.classList.contains('pos-left')) {
         el.classList.remove('pos-left'); el.classList.add('pos-right');
         setEl.classList.remove('pos-right'); setEl.classList.add('pos-left');
@@ -171,7 +195,7 @@ function openModal(id) { document.getElementById(id).style.display = 'block'; }
 // --- UPDATED CLOSE MODAL FUNCTION ---
 function closeModal(id) {
     document.getElementById(id).style.display = 'none';
-    
+
     // Perform cleanup if we are closing the Help Overlay
     if (id === 'help-overlay') {
         // 1. Collapse any expanded gesture cards or accordion items
@@ -206,7 +230,7 @@ function takeScreenshot() {
     } else if (typeof renderer !== 'undefined' && typeof scene !== 'undefined' && typeof camera !== 'undefined') {
         renderer.render(scene, camera);
     }
-    
+
     const dataURL = renderer.domElement.toDataURL('image/png');
     const link = document.createElement('a');
     const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
@@ -232,15 +256,15 @@ function toggleColorConsole() {
 function switchColorView(view) {
     document.getElementById('cp-presets-view').style.display = view === 'presets' ? 'block' : 'none';
     document.getElementById('cp-custom-view').style.display = view === 'custom' ? 'block' : 'none';
-    
-    if(view === 'custom') {
+
+    if (view === 'custom') {
         syncPickerToCurrentColor();
     }
 }
 
 function applyPreset(hex) {
     updateConfig('idleColor', hex);
-    toggleColorConsole(); 
+    toggleColorConsole();
 }
 
 // --- SYNC FUNCTIONALITY ---
@@ -248,16 +272,16 @@ function syncPickerToCurrentColor() {
     const currentHex = config.idleColor || '#0099ff';
     const rgb = hexToRgb(currentHex);
     const hsv = rgbToHsv(rgb.r, rgb.g, rgb.b);
-    
+
     cpState.h = hsv.h * 360;
     cpState.s = hsv.s * 100;
     cpState.v = hsv.v * 100;
 
     document.getElementById('cp-hue-slider').value = cpState.h;
-    
+
     const svBox = document.getElementById('cp-sv-box');
     const svHandle = document.getElementById('cp-sv-handle');
-    
+
     svHandle.style.left = cpState.s + '%';
     svHandle.style.top = (100 - cpState.v) + '%';
     document.getElementById('cp-sv-bg').style.backgroundColor = `hsl(${cpState.h}, 100%, 50%)`;
@@ -304,10 +328,10 @@ function onHueChange(val) {
 }
 
 function syncColorFromHSV() {
-    const {h, s, v} = cpState;
+    const { h, s, v } = cpState;
     const rgb = hsvToRgb(h, s, v);
     const hex = rgbToHex(rgb.r, rgb.g, rgb.b);
-    
+
     updateInputLabel(rgb, hex, h, s, v);
     updateConfig('idleColor', hex);
 }
@@ -317,24 +341,24 @@ function toggleInputMode() {
     let idx = modes.indexOf(cpState.mode);
     cpState.mode = modes[(idx + 1) % modes.length];
     document.getElementById('cp-mode-label').innerText = cpState.mode;
-    syncColorFromHSV(); 
+    syncColorFromHSV();
 }
 
 function updateInputLabel(rgb, hex, h, s, v) {
     const input = document.getElementById('cp-input-val');
-    if(cpState.mode === 'HEX') {
+    if (cpState.mode === 'HEX') {
         input.value = hex;
-    } else if(cpState.mode === 'RGB') {
+    } else if (cpState.mode === 'RGB') {
         input.value = `${rgb.r}, ${rgb.g}, ${rgb.b}`;
-    } else if(cpState.mode === 'HSL') {
-        input.value = `${Math.round(h)}°, ${Math.round(s)}%, ${Math.round(v)}%`; 
+    } else if (cpState.mode === 'HSL') {
+        input.value = `${Math.round(h)}°, ${Math.round(s)}%, ${Math.round(v)}%`;
     }
 }
 
 function onManualInput(val) {
-    if(val.startsWith('#') && val.length === 7) {
+    if (val.startsWith('#') && val.length === 7) {
         updateConfig('idleColor', val);
-        syncPickerToCurrentColor(); 
+        syncPickerToCurrentColor();
     }
 }
 
@@ -361,7 +385,7 @@ function rgbToHsv(r, g, b) {
     s = max === 0 ? 0 : d / max;
 
     if (max === min) {
-        h = 0; 
+        h = 0;
     } else {
         switch (max) {
             case r: h = (g - b) / d + (g < b ? 6 : 0); break;
@@ -388,14 +412,14 @@ function hexToRgb(hex) {
 
 function toggleBlur() {
     const newState = !config.motionBlur;
-    
+
     config.motionBlur = newState;
-    
+
     const btn = document.getElementById('blur-toggle-btn');
     const container = document.getElementById('blur-intensity-container');
     const txt = btn.querySelector('.toggle-text');
 
-    if(newState) {
+    if (newState) {
         btn.classList.add('active');
         container.classList.add('active');
         txt.innerText = "ON";
@@ -404,26 +428,26 @@ function toggleBlur() {
         container.classList.remove('active');
         txt.innerText = "OFF";
     }
-    
+
     checkDirty();
 }
 
 function toggleVibration() {
     const newState = !config.supernovaVibration;
-    
+
     config.supernovaVibration = newState;
-    
+
     const btn = document.getElementById('vib-toggle-btn');
     const txt = btn.querySelector('.toggle-text');
 
-    if(newState) {
+    if (newState) {
         btn.classList.add('active');
         txt.innerText = "ON";
     } else {
         btn.classList.remove('active');
         txt.innerText = "OFF";
     }
-    
+
     checkDirty();
 }
 
@@ -435,19 +459,42 @@ function getBlurForCount(count) {
     return 0.2; // Ultra
 }
 
+// --- CUSTOM DROPDOWN LOGIC ---
+function togglePerfDropdown() {
+    const dropdown = document.getElementById('perf-dropdown');
+    dropdown.classList.toggle('active');
+}
+
+function selectPerfOption(val, label) {
+    // Update UI
+    document.getElementById('perf-selected').innerText = label;
+    document.getElementById('perf-dropdown').classList.remove('active');
+
+    // Trigger Config Update
+    updateConfig('perf', val);
+}
+
+// Close dropdown when clicking outside
+window.addEventListener('click', function (e) {
+    const dropdown = document.getElementById('perf-dropdown');
+    if (dropdown && !dropdown.contains(e.target)) {
+        dropdown.classList.remove('active');
+    }
+});
+
 // --- CONFIGURATION UPDATES ---
 function updateConfig(key, rawVal) {
     if (key === 'blur') {
         config.motionBlur = (rawVal === 'true');
         checkDirty();
-        return; 
+        return;
     }
 
     if (key === 'perf') {
         const val = parseInt(rawVal);
         config.particleCount = val;
         config.modelComplexity = (val <= 12000) ? 0 : 1;
-        
+
         const newBlurStr = getBlurForCount(val);
         config.blurStrength = newBlurStr;
 
@@ -455,7 +502,7 @@ function updateConfig(key, rawVal) {
         if (blurSlider) blurSlider.value = newBlurStr;
         const blurVal = document.getElementById('v-blurStr');
         if (blurVal) blurVal.innerText = newBlurStr;
-        
+
         if (typeof hands !== 'undefined') {
             hands.setOptions({
                 maxNumHands: 2,
@@ -472,8 +519,8 @@ function updateConfig(key, rawVal) {
     if (key === 'idleColor') {
         config.idleColor = rawVal;
         const rgb = hexToRgb(rawVal);
-        config.idleColorRGB = { r: rgb.r/255, g: rgb.g/255, b: rgb.b/255 };
-        
+        config.idleColorRGB = { r: rgb.r / 255, g: rgb.g / 255, b: rgb.b / 255 };
+
         const previewEl = document.getElementById('color-preview');
         if (previewEl) previewEl.style.backgroundColor = rawVal;
 
@@ -487,8 +534,8 @@ function updateConfig(key, rawVal) {
     if (key === 'sens') config.openSens = val;
     if (key === 'rock') config.rockSpeed = val;
     if (key === 'audio') config.audioSensitivity = val;
-    if (key === 'audioRot') config.audioRotSpeed = val; 
-    
+    if (key === 'audioRot') config.audioRotSpeed = val;
+
     if (key === 'aBars') config.audioBarCount = parseInt(val);
     if (key === 'aSmooth') {
         config.audioSmoothing = val;
@@ -507,7 +554,7 @@ function updateConfig(key, rawVal) {
 
     const displayEl = document.getElementById('v-' + key);
     if (displayEl) displayEl.innerText = val;
-    
+
     checkDirty();
 }
 
@@ -532,16 +579,16 @@ function resetConfig() {
     config = { ...defaults };
     config.particleCount = currentPerf;
     config.modelComplexity = currentComplexity;
-    
+
     config.blurStrength = getBlurForCount(currentPerf);
 
     const keys = ['rot', 'sens', 'rock', 'audio', 'audioRot', 'aBars', 'aSmooth', 'x', 'y', 'scale', 'faceRot', 'sMin', 'sMax', 'sSpeed', 'charge', 'sForce', 'blurStr'];
-    const map = { 
-        rot: 'rotSpeed', sens: 'openSens', rock: 'rockSpeed', 
-        audio: 'audioSensitivity', audioRot: 'audioRotSpeed', 
+    const map = {
+        rot: 'rotSpeed', sens: 'openSens', rock: 'rockSpeed',
+        audio: 'audioSensitivity', audioRot: 'audioRotSpeed',
         aBars: 'audioBarCount', aSmooth: 'audioSmoothing',
-        x: 'faceOffsetX', y: 'faceOffsetY', 
-        scale: 'faceScale', faceRot: 'faceRotation', sMin: 'stealthMin', 
+        x: 'faceOffsetX', y: 'faceOffsetY',
+        scale: 'faceScale', faceRot: 'faceRotation', sMin: 'stealthMin',
         sMax: 'stealthMax', sSpeed: 'stealthSpeed', charge: 'supernovaCharge',
         sForce: 'supernovaForce',
         blurStr: 'blurStrength'
@@ -571,10 +618,10 @@ function resetConfig() {
 
     const previewEl = document.getElementById('color-preview');
     if (previewEl) previewEl.style.backgroundColor = defaults.idleColor;
-    
+
     document.getElementById('cyber-color-console').classList.remove('active');
-    switchColorView('presets'); 
-    
+    switchColorView('presets');
+
     if (typeof analyser !== 'undefined' && analyser) analyser.smoothingTimeConstant = config.audioSmoothing;
 
     checkDirty();
@@ -583,24 +630,24 @@ function resetConfig() {
 const carouselData = {
     'zoom': [
         { src: 'References/zoom1.png', label: 'HAND POSITION REFERENCE' },
-        { src: 'References/zoom2.png', label: 'ZOOM IN (MOVE HANDS APART)' },
-        { src: 'References/zoom3.png', label: 'ZOOM OUT (MOVE HANDS CLOSER)' }
+        { src: 'Assets/References/zoom2.png', label: 'ZOOM IN (MOVE HANDS APART)' },
+        { src: 'Assets/References/zoom3.png', label: 'ZOOM OUT (MOVE HANDS CLOSER)' }
     ],
     'pinch': [
-        { src: 'References/pinch1.png', label: 'FRONT VIEW' },
-        { src: 'References/pinch2.png', label: 'SIDE VIEW' }
+        { src: 'Assets/References/pinch1.png', label: 'FRONT VIEW' },
+        { src: 'Assets/References/pinch2.png', label: 'SIDE VIEW' }
     ],
     'rock': [
-        { src: 'References/rock1.png', label: 'VERSION A' },
-        { src: 'References/rock2.png', label: 'VERSION B' }
+        { src: 'Assets/References/rock1.png', label: 'VERSION A' },
+        { src: 'Assets/References/rock2.png', label: 'VERSION B' }
     ],
     'supernova': [
-        { src: 'References/pinch1.png', label: 'FRONT VIEW' },
-        { src: 'References/pinch2.png', label: 'SIDE VIEW' }
+        { src: 'Assets/References/pinch1.png', label: 'FRONT VIEW' },
+        { src: 'Assets/References/pinch2.png', label: 'SIDE VIEW' }
     ],
     'mic': [
-        { src: 'References/mic1.png', label: 'FRONT VIEW' },
-        { src: 'References/mic2.png', label: 'SIDE VIEW' }
+        { src: 'Assets/References/mic1.png', label: 'FRONT VIEW' },
+        { src: 'Assets/References/mic2.png', label: 'SIDE VIEW' }
     ]
 
 };

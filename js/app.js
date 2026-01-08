@@ -28,7 +28,7 @@ function launchSystem(selectedCount) {
     }
 
     config.blurStrength = newBlurStr;
-    
+
     // Sync UI to new values
     const blurSlider = document.getElementById('i-blurStr');
     if (blurSlider) blurSlider.value = newBlurStr;
@@ -44,10 +44,46 @@ function launchSystem(selectedCount) {
         });
     }
 
-    document.getElementById('i-perf').value = selectedCount;
-    document.getElementById('perf-selector').style.display = 'none';
-    document.getElementById('loading-container').style.display = 'flex';
-    initializeSystem();
+    // Update Custom Dropdown (if exists)
+    const perfSelected = document.getElementById('perf-selected');
+    if (perfSelected) {
+        let label = "HIGH (20,000) - Recommended";
+        if (selectedCount >= 32000) label = "ULTRA (32,000)";
+        else if (selectedCount <= 6000) label = "LOW (6,000)";
+        else if (selectedCount <= 12000) label = "MEDIUM (12,000)";
+        perfSelected.innerText = label;
+    }
+
+    // --- ANIMATED TRANSITION ---
+    const options = document.querySelectorAll('.perf-option');
+
+    // Find clicked option and add confirmation pulse
+    options.forEach(opt => {
+        if (opt.innerText.includes(selectedCount.toString().replace('000', 'K'))) {
+            opt.classList.add('selected-confirm');
+        }
+    });
+
+    // Staggered Exit after a short delay for confirmation
+    setTimeout(() => {
+        options.forEach((opt, index) => {
+            setTimeout(() => {
+                opt.classList.add('exit');
+            }, index * 80);
+        });
+
+        // After all exits complete, show loader
+        const totalExitTime = (options.length * 80) + 400; // stagger + animation duration
+        setTimeout(() => {
+            document.getElementById('perf-selector').style.display = 'none';
+            const loader = document.getElementById('loading-container');
+            loader.style.display = 'flex';
+            // Trigger reflow for transition
+            void loader.offsetWidth;
+            loader.classList.add('visible');
+            initializeSystem();
+        }, totalExitTime);
+    }, 350); // Wait for confirmation pulse
 }
 
 function initializeSystem() {
@@ -152,7 +188,7 @@ function animate() {
     if (audioToggleCooldown > 0) audioToggleCooldown -= dt;
 
     // --- BUFFER TIMERS LOGIC ---
-    
+
     // 1. PINCH BUFFER
     if (hand.gesture === 'PINCH') {
         pinchBufferTimer += dt;
@@ -176,7 +212,7 @@ function animate() {
 
     // Define 'isPinch' based on the buffer
     let isPinch = (hand.gesture === 'PINCH' && pinchBufferTimer > config.pinchBuffer);
-    
+
     let isRock = (hand.gesture === 'ROCK');
     let isThree = (hand.gesture === 'THREE');
     let isShhh = (hand.gesture === 'SHHH');
@@ -188,7 +224,7 @@ function animate() {
     if ((isPinch || inGracePeriod) && !isSupernova && !isStealthMode && !faceLocked && !isScanning && !isAudioMode) {
         pinchTimer += dt;
         if (pinchTimer > config.supernovaCharge) {
-            if (!isSupernova) { 
+            if (!isSupernova) {
                 isSupernova = true;
                 document.getElementById('shape-name').innerText = "SUPERNOVA";
             }
@@ -205,11 +241,11 @@ function animate() {
         if (supernovaVibeTimer <= 0) {
             // Pulse vibration every 0.1 seconds
             if (navigator.vibrate) navigator.vibrate(100);
-            supernovaVibeTimer = 0.1; 
+            supernovaVibeTimer = 0.1;
         }
     } else {
         // Reset vibration timer when mode is inactive
-        supernovaVibeTimer = 0; 
+        supernovaVibeTimer = 0;
     }
 
     // Audio Toggle Logic
@@ -217,7 +253,7 @@ function animate() {
         if (!isAudioMode) { startAudio(); } else { stopAudio(); }
         audioToggleCooldown = 2.0;
     }
-    
+
     // Play/Pause (File Mode Only)
     if (isAudioFileMode && hand.gesture === 'THREE' && audioToggleCooldown <= 0 && !isSupernova) {
         isPaused = !isPaused;
@@ -225,7 +261,7 @@ function animate() {
             if (isPaused) audioElement.pause();
             else audioElement.play();
         }
-        audioToggleCooldown = 0.5; 
+        audioToggleCooldown = 0.5;
     }
 
     // Next Shape Logic (WITH BUFFER)
@@ -235,11 +271,11 @@ function animate() {
         if (isSupernova) { isSupernova = false; pinchTimer = 0; }
         shapeIdx = (shapeIdx + 1) % SHAPES.length;
         updateShape(SHAPES[shapeIdx]);
-        
+
         cooldown = 2.0;
-        peaceTimer = 0; 
+        peaceTimer = 0;
     }
-    
+
     // Global Exit Logic (FIST)
     if ((faceLocked || isScanning || isAudioMode || isSupernova || isStealthMode) && hand.gesture === 'FIST') {
         faceLocked = false; isScanning = false; isFaceMode = false; isSupernova = false; isStealthMode = false; pinchTimer = 0;
@@ -265,12 +301,12 @@ function animate() {
     stealthFactor = Math.max(0, Math.min(1, stealthFactor));
 
     // Easter Egg Logic (WITH BUFFER)
-    if (hand.gesture === 'SECRET' && secretBufferTimer > config.secretBuffer && !faceLocked && !isScanning && !isAudioMode && !isSupernova && !isStealthMode) { 
-        isSecretActive = true; 
-        secretTimer = 1.35; 
-        document.getElementById('shape-name').innerText = "F**k You"; 
+    if (hand.gesture === 'SECRET' && secretBufferTimer > config.secretBuffer && !faceLocked && !isScanning && !isAudioMode && !isSupernova && !isStealthMode) {
+        isSecretActive = true;
+        secretTimer = 1.35;
+        document.getElementById('shape-name').innerText = "F**k You";
     }
-    
+
     if (isSecretActive) {
         if (hand.gesture !== 'SECRET') secretTimer -= dt;
         if (secretTimer <= 0) { isSecretActive = false; document.getElementById('shape-name').innerText = SHAPES[shapeIdx].toUpperCase(); }
@@ -289,7 +325,7 @@ function animate() {
     }
 
     // --- CAMERA ORBITAL CONTROLS & RESET LOGIC ---
-    
+
     // 1. Trigger the Reset Flag if Fist is detected
     if (hand.gesture === 'FIST') {
         isResetting = true;
@@ -316,8 +352,8 @@ function animate() {
     // 4. Apply Persistent Reset Interpolation
     if (isResetting) {
         wasDragging = false;
-        camTheta += (0 - camTheta) * 0.05; 
-        camPhi += ((Math.PI / 2) - camPhi) * 0.05; 
+        camTheta += (0 - camTheta) * 0.05;
+        camPhi += ((Math.PI / 2) - camPhi) * 0.05;
         camRadius += (90 - camRadius) * 0.05;
 
         if (Math.abs(camTheta) < 0.005 && Math.abs(camPhi - Math.PI / 2) < 0.005 && Math.abs(camRadius - 90) < 0.5) {
@@ -326,10 +362,10 @@ function animate() {
     }
 
     // Camera Rotation in Audio Mode
-    if (isAudioMode && !wasDragging && hand.gesture !== 'OPEN' && !isPaused) { 
-        visRotation += dt * config.audioRotSpeed; 
+    if (isAudioMode && !wasDragging && hand.gesture !== 'OPEN' && !isPaused) {
+        visRotation += dt * config.audioRotSpeed;
     }
-    
+
     // Force reset values if in a locked mode
     if (isSecretActive || faceLocked) {
         camTheta += (0 - camTheta) * 0.05;
@@ -363,8 +399,8 @@ function animate() {
     camera.lookAt(finalLook);
 
     // --- COLOR & PARTICLE UPDATE LOOP ---
-    let baseR = config.idleColorRGB.r; 
-    let baseG = config.idleColorRGB.g; 
+    let baseR = config.idleColorRGB.r;
+    let baseG = config.idleColorRGB.g;
     let baseB = config.idleColorRGB.b;
 
     if (hand.gesture === 'FIST') { baseR = 0.8; baseG = 0.8; baseB = 0.8; }
@@ -388,7 +424,7 @@ function animate() {
         stealthRMod = 1 - stealthFactor;
         stealthGMod = 1 - stealthFactor;
         stealthBMod = 1 - stealthFactor;
-        
+
         stealthPulseOffsetR = (config.idleColorRGB.r * pulse) * stealthFactor;
         stealthPulseOffsetG = (config.idleColorRGB.g * pulse) * stealthFactor;
         stealthPulseOffsetB = (config.idleColorRGB.b * pulse) * stealthFactor;
@@ -422,7 +458,7 @@ function animate() {
 
     let rotCo = 1, rotSi = 0;
     let applyRotation = false;
-    
+
     // Calculate global rotation matrix if needed
     if (!isThree && !isShhh && !isStealthMode && !isSecretActive && !isZooming && !isFaceMode && !isScanning && !isAudioMode) {
         const rot = time * 0.1;
@@ -432,7 +468,7 @@ function animate() {
 
     const p = geometry.attributes.position.array;
     const c = geometry.attributes.color.array;
-    
+
     // Dynamic Bar Mapping
     const numBars = config.audioBarCount;
     const particlesPerBar = Math.floor(COUNT / numBars);
@@ -448,11 +484,11 @@ function animate() {
             let barIdx = Math.floor(i / particlesPerBar);
             if (barIdx >= numBars) barIdx = numBars - 1;
             const stackIdx = i % particlesPerBar;
-            
+
             // Limit frequency range to avoid empty high-end bars
             const freqLimit = isAudioFileMode ? 0.65 : 0.85;
             const freq = dataArray[Math.floor((barIdx / numBars) * (dataArray.length * freqLimit))];
-            
+
             const angle = (barIdx / numBars) * Math.PI * 2 + visRotation;
             const rad = 45;
 
@@ -532,21 +568,21 @@ function animate() {
         // --- FACE COLOR MAPPING ---
         if ((isFaceMode || isScanning) && faceLandmarks && Number.isFinite(faceColorArray[i3])) {
             let vR = faceColorArray[i3];
-            let vG = faceColorArray[i3+1];
-            let vB = faceColorArray[i3+2];
+            let vG = faceColorArray[i3 + 1];
+            let vB = faceColorArray[i3 + 2];
             let luma = 0.299 * vR + 0.587 * vG + 0.114 * vB;
 
             // Boost brightness for visibility
             luma = Math.max(0.3, luma);
 
-            let targetR = luma * 0.9; 
-            let targetG = luma * 0.95; 
-            let targetB = 1.0; 
+            let targetR = luma * 0.9;
+            let targetG = luma * 0.95;
+            let targetB = 1.0;
 
             c[i3] += (targetR - c[i3]) * 0.1;
             c[i3 + 1] += (targetG - c[i3 + 1]) * 0.1;
             c[i3 + 2] += (targetB - c[i3 + 2]) * 0.1;
-        } 
+        }
         else {
             c[i3] += (r - c[i3]) * 0.05;
             c[i3 + 1] += (g - c[i3 + 1]) * 0.05;

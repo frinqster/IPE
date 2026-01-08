@@ -138,8 +138,15 @@ canvas {
 }
 
 @keyframes blink-cursor {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
 }
 
 .l-subtitle {
@@ -320,9 +327,20 @@ canvas {
 }
 
 @keyframes pulse-border {
-    0% { outline-color: rgba(0, 255, 204, 0.3); outline-offset: -20px; }
-    50% { outline-color: rgba(0, 255, 204, 1); outline-offset: -30px; }
-    100% { outline-color: rgba(0, 255, 204, 0.3); outline-offset: -20px; }
+    0% {
+        outline-color: rgba(0, 255, 204, 0.3);
+        outline-offset: -20px;
+    }
+
+    50% {
+        outline-color: rgba(0, 255, 204, 1);
+        outline-offset: -30px;
+    }
+
+    100% {
+        outline-color: rgba(0, 255, 204, 0.3);
+        outline-offset: -20px;
+    }
 }
 
 #drag-drop-text {
@@ -389,8 +407,17 @@ canvas {
 }
 
 @keyframes blink {
-    0%, 100% { opacity: 1; border-color: #00ffcc; }
-    50% { opacity: 0.5; border-color: rgba(0, 255, 204, 0.3); }
+
+    0%,
+    100% {
+        opacity: 1;
+        border-color: #00ffcc;
+    }
+
+    50% {
+        opacity: 0.5;
+        border-color: rgba(0, 255, 204, 0.3);
+    }
 }
 
 #hud-status {
@@ -424,8 +451,15 @@ canvas {
 }
 
 @keyframes flash {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.3; }
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.3;
+    }
 }
 
 .label {
@@ -613,14 +647,45 @@ canvas {
 }
 
 /* Control Panel Emojis */
-.c-emoji1 { width: 20px; height: 20px; object-fit: contain; }
-.c-emoji2 { width: 20px; height: 20px; object-fit: contain; }
-.c-emoji3 { width: 20px; height: 20px; object-fit: contain; }
+.c-emoji1 {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+
+.c-emoji2 {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+
+.c-emoji3 {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
 
 /* System Manual Emojis */
-.s-emoji1 { width: 17px; height: 17px; object-fit: contain; vertical-align: middle; }
-.s-emoji2 { width: 16px; height: 16px; object-fit: contain; vertical-align: middle; }
-.s-emoji3 { width: 16px; height: 16px; object-fit: contain; vertical-align: middle; }
+.s-emoji1 {
+    width: 17px;
+    height: 17px;
+    object-fit: contain;
+    vertical-align: middle;
+}
+
+.s-emoji2 {
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+    vertical-align: middle;
+}
+
+.s-emoji3 {
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+    vertical-align: middle;
+}
 
 /* --- MODAL OVERLAYS (Help, About, etc.) --- */
 .modal-overlay {
@@ -650,7 +715,9 @@ canvas {
     box-shadow: 0 0 30px rgba(0, 255, 204, 0.1);
 }
 
-h1, h2, h3 {
+h1,
+h2,
+h3 {
     color: #00ffcc;
     text-transform: uppercase;
     margin-top: 0;
@@ -671,7 +738,8 @@ h3 {
     padding-bottom: 5px;
 }
 
-p, li {
+p,
+li {
     font-size: 14px;
     line-height: 1.6;
     color: #ccc;
@@ -695,8 +763,17 @@ p, li {
 }
 
 @keyframes flash-highlight {
-    0% { background: rgba(0, 255, 204, 0.8); color: #000; box-shadow: 0 0 15px #00ffcc; }
-    100% { background: transparent; color: inherit; box-shadow: none; }
+    0% {
+        background: rgba(0, 255, 204, 0.8);
+        color: #000;
+        box-shadow: 0 0 15px #00ffcc;
+    }
+
+    100% {
+        background: transparent;
+        color: inherit;
+        box-shadow: none;
+    }
 }
 
 .gesture-grid {
@@ -735,13 +812,27 @@ p, li {
 }
 
 @keyframes flipOut {
-    from { transform: rotateY(0deg); opacity: 1; }
-    to { transform: rotateY(90deg); opacity: 0; }
+    from {
+        transform: rotateY(0deg);
+        opacity: 1;
+    }
+
+    to {
+        transform: rotateY(90deg);
+        opacity: 0;
+    }
 }
 
 @keyframes flipIn {
-    from { transform: rotateY(-90deg); opacity: 0; }
-    to { transform: rotateY(0deg); opacity: 1; }
+    from {
+        transform: rotateY(-90deg);
+        opacity: 0;
+    }
+
+    to {
+        transform: rotateY(0deg);
+        opacity: 1;
+    }
 }
 
 .flip-btn {
@@ -1111,10 +1202,25 @@ p, li {
     justify-content: center;
 }
 
-#settings-trigger.pos-right { right: 20px; left: auto; }
-#screenshot-trigger.pos-right { right: 65px; left: auto; }
-#settings-trigger.pos-left { left: 20px; right: auto; }
-#screenshot-trigger.pos-left { left: 65px; right: auto; }
+#settings-trigger.pos-right {
+    right: 20px;
+    left: auto;
+}
+
+#screenshot-trigger.pos-right {
+    right: 65px;
+    left: auto;
+}
+
+#settings-trigger.pos-left {
+    left: 20px;
+    right: auto;
+}
+
+#screenshot-trigger.pos-left {
+    left: 65px;
+    right: auto;
+}
 
 #settings-trigger:hover,
 #screenshot-trigger:hover {
@@ -1126,8 +1232,17 @@ p, li {
     transform: rotate(180deg);
 }
 
-.gear-icon { width: 100%; height: 100%; fill: #00ffcc; }
-.camera-icon { width: 100%; height: 100%; fill: #00ffcc; }
+.gear-icon {
+    width: 100%;
+    height: 100%;
+    fill: #00ffcc;
+}
+
+.camera-icon {
+    width: 100%;
+    height: 100%;
+    fill: #00ffcc;
+}
 
 #settings-panel {
     position: fixed;
@@ -1468,6 +1583,79 @@ select:focus {
     text-transform: uppercase;
 }
 
+/* --- CUSTOM TECH DROPDOWN --- */
+.tech-dropdown {
+    position: relative;
+    width: 280px;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    z-index: 1000;
+}
+
+.tech-dropdown-selected {
+    background: rgba(0, 0, 0, 0.8);
+    border: 1px solid #00ffcc;
+    color: #00ffcc;
+    padding: 10px 15px;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.3s ease;
+    text-shadow: 0 0 5px #00ffcc;
+}
+
+.tech-dropdown-selected::after {
+    content: '▼';
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 10px;
+}
+
+.tech-dropdown.active .tech-dropdown-selected {
+    background: rgba(0, 255, 204, 0.1);
+    box-shadow: 0 0 15px rgba(0, 255, 204, 0.2);
+    border-bottom-color: transparent;
+}
+
+.tech-dropdown-options {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    border: 1px solid #00ffcc;
+    border-top: none;
+    display: none;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1001;
+    /* Ensure it stays on top */
+}
+
+.tech-dropdown.active .tech-dropdown-options {
+    display: block;
+    animation: fadeIn 0.15s ease-out;
+}
+
+.tech-option {
+    padding: 10px 15px;
+    color: #888;
+    cursor: pointer;
+    border-bottom: 1px solid rgba(0, 255, 204, 0.1);
+    transition: all 0.2s;
+}
+
+.tech-option:hover {
+    background: rgba(0, 255, 204, 0.2);
+    color: #fff;
+    padding-left: 20px;
+}
+
+.tech-option:last-child {
+    border-bottom: none;
+}
+
 /* --- TOGGLES & SLIDERS --- */
 .toggle-switch {
     width: 100%;
@@ -1590,8 +1778,15 @@ select:focus {
     transition: all 0.5s ease;
 }
 
-.pos-left { left: 20px; right: auto; }
-.pos-right { right: 20px; left: auto; }
+.pos-left {
+    left: 20px;
+    right: auto;
+}
+
+.pos-right {
+    right: 20px;
+    left: auto;
+}
 
 #cam-view {
     width: 160px;
@@ -1702,4 +1897,426 @@ select:focus {
     width: 14px;
     height: 14px;
     fill: currentColor;
+}
+
+/* --- NEW LANDING ANIMATIONS & CURSOR --- */
+
+/* --- NEW LANDING ANIMATIONS & CURSOR --- */
+
+/* Custom Cursor: Hide default cursor everywhere */
+* {
+    cursor: none !important;
+}
+
+/* Force override for inputs to prevent text cursor */
+input,
+select,
+textarea,
+button,
+a {
+    cursor: none !important;
+}
+
+.cursor-dot {
+    width: 8px;
+    height: 8px;
+    background-color: #00ffcc;
+    border-radius: 50%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 9999;
+    box-shadow: 0 0 10px #00ffcc;
+    transition: width 0.2s, height 0.2s, background-color 0.2s;
+}
+
+.cursor-outline {
+    width: 40px;
+    height: 40px;
+    border: 1px solid #00ffcc;
+    border-radius: 50%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 9998;
+    transition: width 0.2s, height 0.2s, background-color 0.2s, border-color 0.2s;
+}
+
+/* Hover State */
+.cursor-outline.cursor-hover {
+    width: 60px;
+    height: 60px;
+    border-color: #fff;
+    background-color: rgba(0, 255, 204, 0.1);
+}
+
+.cursor-dot.cursor-hover {
+    background-color: #fff;
+    box-shadow: 0 0 15px #fff;
+}
+
+.cursor-ripple {
+    width: 10px;
+    height: 10px;
+    border: 2px solid #00ffcc;
+    /* Neon Cyan */
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9997;
+    transform: translate(-50%, -50%);
+    animation: ripple-effect 0.8s linear forwards;
+}
+
+@keyframes ripple-effect {
+    0% {
+        width: 10px;
+        height: 10px;
+        opacity: 1;
+        border-width: 2px;
+    }
+
+    100% {
+        width: 100px;
+        height: 100px;
+        opacity: 0;
+        border-width: 0px;
+    }
+}
+
+/* Staggered Entrance Animations */
+.l-navbar {
+    animation: fadeInUp 1s ease-out forwards;
+    opacity: 0;
+}
+
+.l-title {
+    animation: slideInUp 1s ease-out forwards;
+    opacity: 0;
+    position: relative;
+    /* pulsating text shadow */
+    animation:
+        slideInUp 1s ease-out forwards,
+        glowPulse 3s infinite alternate;
+}
+
+.l-subtitle {
+    animation: fadeInUp 1s ease-out 0.3s forwards;
+    opacity: 0;
+}
+
+/* Ensure Button has relative positioning for overflow effects */
+.l-btn {
+    animation: popIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.8s forwards;
+    /* Delayed pop-in */
+    opacity: 0;
+    overflow: hidden;
+    /* For scanline */
+}
+
+/* Scanline Effect for Button */
+.l-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0, 255, 204, 0.4), transparent);
+    transition: 0.5s;
+    animation: btnScan 3s infinite ease-in-out;
+}
+
+@keyframes btnScan {
+    0% {
+        left: -100%;
+    }
+
+    20% {
+        left: 100%;
+    }
+
+    100% {
+        left: 100%;
+    }
+}
+
+/* Keyframes */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes popIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes glowPulse {
+    from {
+        text-shadow: 0 0 5px rgba(0, 255, 204, 0.5);
+    }
+
+    to {
+        text-shadow: 0 0 20px rgba(0, 255, 204, 1), 0 0 40px rgba(0, 255, 204, 0.5);
+    }
+}
+
+/* Background Canvas Z-Index Override */
+#bg-canvas {
+    z-index: 0;
+}
+
+/* Ensure content stays on top */
+
+
+/* Specific override for range sliders to prevent default arrow/grab cursor */
+/* We target every vendor prefix and state to ensure compliance */
+input[type="range"] {
+    cursor: none !important;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    cursor: none !important;
+    -webkit-appearance: none;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+    cursor: none !important;
+}
+
+input[type="range"]::-moz-range-thumb {
+    cursor: none !important;
+}
+
+input[type="range"]::-moz-range-track {
+    cursor: none !important;
+}
+
+input[type="range"]::-ms-thumb {
+    cursor: none !important;
+}
+
+input[type="range"]:active,
+input[type="range"]:focus,
+input[type="range"]:hover {
+    cursor: none !important;
+}
+
+
+/* --- LAUNCH TRANSITIONS --- */
+.l-btn-exit {
+    animation: glitchOut 0.4s forwards ease-in;
+}
+
+@keyframes glitchOut {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+        clip-path: inset(0 0 0 0);
+    }
+
+    20% {
+        transform: scale(1.1);
+        clip-path: inset(10% 0 10% 0);
+    }
+
+    40% {
+        transform: scale(0.9);
+        clip-path: inset(40% 0 40% 0);
+        filter: hue-rotate(90deg);
+    }
+
+    60% {
+        transform: scale(1.05);
+        clip-path: inset(0 0 0 0);
+        opacity: 0.8;
+    }
+
+    100% {
+        transform: scale(0);
+        opacity: 0;
+        filter: blur(10px);
+    }
+}
+
+.perf-option {
+    /* Existing styles remain, just add initial state for animation */
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.perf-option.animate-in {
+    animation: slideUpFade 0.5s forwards cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.perf-option.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@keyframes slideUpFade {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Selection Confirmation Flash */
+.perf-option.selected-confirm {
+    animation: confirmPulse 0.3s ease-out;
+}
+
+@keyframes confirmPulse {
+    0% {
+        background: rgba(0, 255, 204, 0.1);
+    }
+
+    50% {
+        background: rgba(0, 255, 204, 0.5);
+        box-shadow: 0 0 30px rgba(0, 255, 204, 0.6);
+    }
+
+    100% {
+        background: rgba(0, 255, 204, 0.1);
+    }
+}
+
+/* Selector Exit Animation */
+.perf-option.exit {
+    animation: slideDownFade 0.4s forwards ease-in;
+}
+
+@keyframes slideDownFade {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+}
+
+/* Loading Container Entrance */
+#loading-container {
+    opacity: 0;
+    transition: opacity 0.5s ease-out;
+}
+
+#loading-container.visible {
+    opacity: 1;
+}
+
+/* --- REVAMPED PERFORMANCE SELECTOR --- */
+#perf-selector {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    z-index: 6000;
+    /* Ensure on top of everything */
+    position: relative;
+    animation: fadeIn 0.5s ease-out;
+    margin: 0 auto;
+}
+
+.perf-option {
+    width: 300px;
+    padding: 15px 20px;
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid #00ffcc;
+    border-left: 5px solid #00ffcc;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.perf-option:hover {
+    background: rgba(0, 255, 204, 0.1);
+    transform: translateX(10px) scale(1.02);
+    box-shadow: 0 0 20px rgba(0, 255, 204, 0.3);
+}
+
+.perf-option .p-name {
+    font-size: 18px;
+    font-weight: bold;
+    color: #00ffcc;
+    letter-spacing: 2px;
+    margin-bottom: 4px;
+}
+
+.perf-option .p-desc {
+    font-size: 10px;
+    color: #aaa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.perf-option:hover .p-name {
+    text-shadow: 0 0 10px #00ffcc;
+}
+
+.perf-help-btn {
+    position: absolute;
+    top: -40px;
+    right: 0;
+    width: 30px;
+    height: 30px;
+    border: 1px solid #00ffcc;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #00ffcc;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.perf-help-btn:hover {
+    background: #00ffcc;
+    color: #000;
+    box-shadow: 0 0 15px #00ffcc;
 }

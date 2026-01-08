@@ -50,9 +50,13 @@
         crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/face_mesh.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/face_mesh.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
+    <!-- CUSTOM CURSOR -->
+    <div class="cursor-dot" id="cursor-dot"></div>
+    <div class="cursor-outline" id="cursor-outline"></div>
 
     <!-- LANDING PAGE -->
     <div id="landing-page">
@@ -170,7 +174,8 @@
                         </div>
                         <span class="g-desc">Returns the particle system to default state.</span>
                         <span class="g-how">Make a FIST ✊</span>
-                        <div class="g-ref-container"><img src="Assets/References/fist.png" class="g-ref-img" alt="Reference">
+                        <div class="g-ref-container"><img src="Assets/References/fist.png" class="g-ref-img"
+                                alt="Reference">
                         </div>
                     </div>
                     <!-- BACK FACE -->
@@ -189,7 +194,8 @@
                         </div>
                         <span class="g-desc">Emergency override to exit ANY active mode instantly.</span>
                         <span class="g-how">Make a FIST ✊</span>
-                        <div class="g-ref-container"><img src="Assets/References/fist.png" class="g-ref-img" alt="Reference">
+                        <div class="g-ref-container"><img src="Assets/References/fist.png" class="g-ref-img"
+                                alt="Reference">
                         </div>
                     </div>
                 </div>
@@ -198,7 +204,8 @@
                     <div class="g-header"><span class="g-title">CAMERA ROTATE</span><span class="g-arrow">▼</span></div>
                     <span class="g-desc">Manually look around the scene.</span>
                     <span class="g-how">OPEN HAND 🖐 and drag.</span>
-                    <div class="g-ref-container"><img src="Assets/References/open.png" class="g-ref-img" alt="Reference"></div>
+                    <div class="g-ref-container"><img src="Assets/References/open.png" class="g-ref-img"
+                            alt="Reference"></div>
                 </div>
 
                 <!-- CAROUSEL: ZOOM -->
@@ -220,7 +227,8 @@
                     <div class="g-header"><span class="g-title">NEXT SHAPE</span><span class="g-arrow">▼</span></div>
                     <span class="g-desc">Cycles to the next 3D object.</span>
                     <span class="g-how">Make a PEACE Sign ✌️</span>
-                    <div class="g-ref-container"><img src="Assets/References/peace.png" class="g-ref-img" alt="Reference">
+                    <div class="g-ref-container"><img src="Assets/References/peace.png" class="g-ref-img"
+                            alt="Reference">
                     </div>
                 </div>
 
@@ -241,9 +249,10 @@
                             </div>
                         </div>
                         <span class="g-desc">Pauses particle's idle movement.</span>
-                        <span class="g-how">Put up 3-FINGERS <img src="Assets/Emojis/3_finger_emoji.png" class="s-emoji1"
-                                alt=""></span>
-                        <div class="g-ref-container"><img src="Assets/References/three.png" class="g-ref-img" alt="Reference">
+                        <span class="g-how">Put up 3-FINGERS <img src="Assets/Emojis/3_finger_emoji.png"
+                                class="s-emoji1" alt=""></span>
+                        <div class="g-ref-container"><img src="Assets/References/three.png" class="g-ref-img"
+                                alt="Reference">
                         </div>
                     </div>
                     <!-- BACK FACE -->
@@ -262,9 +271,10 @@
                         </div>
                         <span class="g-desc">Toggles PLAY / PAUSE during <span class="text-link"
                                 onclick="jumpToVisualizerFile(event)">VISUALIZER (FILE)</span> mode.</span>
-                        <span class="g-how">Put up 3-FINGERS <img src="Assets/Emojis/3_finger_emoji.png" class="s-emoji1"
-                                alt=""></span>
-                        <div class="g-ref-container"><img src="Assets/References/three.png" class="g-ref-img" alt="Reference">
+                        <span class="g-how">Put up 3-FINGERS <img src="Assets/Emojis/3_finger_emoji.png"
+                                class="s-emoji1" alt=""></span>
+                        <div class="g-ref-container"><img src="Assets/References/three.png" class="g-ref-img"
+                                alt="Reference">
                         </div>
                     </div>
                 </div>
@@ -273,8 +283,8 @@
                 <div class="gesture-item" id="g-item-pinch" onclick="toggleRef(this)">
                     <div class="g-header"><span class="g-title">IMPLODE</span><span class="g-arrow">▼</span></div>
                     <span class="g-desc">Collapses particles to center.</span>
-                    <span class="g-how">PINCH using your whole hand <img src="Assets/Emojis/pinch_emoji.png" class="s-emoji3"
-                            alt=""></span>
+                    <span class="g-how">PINCH using your whole hand <img src="Assets/Emojis/pinch_emoji.png"
+                            class="s-emoji3" alt=""></span>
                     <div class="g-ref-container">
                         <div class="carousel-container">
                             <div class="carousel-btn prev-btn" onclick="changeSlide(event, 'pinch', -1)">❮</div>
@@ -305,7 +315,8 @@
                             class="g-arrow">▼</span></div>
                     <span class="g-desc">Hard to believe but here's your reward.</span>
                     <span class="g-how">Make an 'L' shape 👆</span>
-                    <div class="g-ref-container"><img src="Assets/References/secret.png" class="g-ref-img" alt="Reference">
+                    <div class="g-ref-container"><img src="Assets/References/secret.png" class="g-ref-img"
+                            alt="Reference">
                     </div>
                 </div>
 
@@ -331,7 +342,8 @@
                     <div class="g-ref-container">
                         <div class="carousel-container">
                             <div class="carousel-btn prev-btn" onclick="changeSlide(event, 'supernova', -1)">❮</div>
-                            <img id="ref-supernova" src="Assets/References/pinch1.png" class="g-ref-img" alt="Reference">
+                            <img id="ref-supernova" src="Assets/References/pinch1.png" class="g-ref-img"
+                                alt="Reference">
                             <div id="cap-supernova" class="carousel-caption">FRONT VIEW</div>
                             <div class="carousel-btn next-btn" onclick="changeSlide(event, 'supernova', 1)">❯</div>
                         </div>
@@ -342,7 +354,8 @@
                     <div class="g-header"><span class="g-title">STEALTH MODE</span><span class="g-arrow">▼</span></div>
                     <span class="g-desc">Dims lights and particles pulse.</span>
                     <span class="g-how">Put your INDEX FINGER to LIPS (Shhh) 🤫</span>
-                    <div class="g-ref-container"><img src="Assets/References/shhh.png" class="g-ref-img" alt="Reference"></div>
+                    <div class="g-ref-container"><img src="Assets/References/shhh.png" class="g-ref-img"
+                            alt="Reference"></div>
                 </div>
 
                 <!-- FLIPPABLE: AUDIO LINK -->
@@ -403,7 +416,8 @@
                     <div class="g-header"><span class="g-title">FACE SCAN</span><span class="g-arrow">▼</span></div>
                     <span class="g-desc">Maps particles to your face in 3D.</span>
                     <span class="g-how">Put up a THUMBS UP 👍</span>
-                    <div class="g-ref-container"><img src="Assets/References/thumb.png" class="g-ref-img" alt="Reference">
+                    <div class="g-ref-container"><img src="Assets/References/thumb.png" class="g-ref-img"
+                            alt="Reference">
                     </div>
                 </div>
             </div>
@@ -661,8 +675,7 @@
                 For a detailed exploration of the Interactive Particle Engine's design, algorithms, and implementation,
                 download the official:
                 <br>
-                <a href="Docs/IPE Documentation.pdf" download="IPE_DOCUMENTATION.pdf"
-                    class="contact-btn"
+                <a href="Docs/IPE Documentation.pdf" download="IPE_DOCUMENTATION.pdf" class="contact-btn"
                     style="display:inline-flex; width:auto; margin-top:15px; font-size:1em; padding:10px 25px; align-items:center;">
                     <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"
                         stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px;">
@@ -809,9 +822,11 @@
             </div>
             <p>Establish connection via the following secure channels.</p>
             <div class="contact-grid">
-                <a href="https://github.com/frinqster/IPE" target="_blank" class="contact-btn">GITHUB REPOSITORY <span>→</span></a>
+                <a href="https://github.com/frinqster/IPE" target="_blank" class="contact-btn">GITHUB REPOSITORY
+                    <span>→</span></a>
                 <a href="#" target="_blank" class="contact-btn">LINKEDIN PROFILE <span>→</span></a>
-                <a href="mailto:faiqsyed594@gmail.com" target="_blank" class="contact-btn">SEND TRANSMISSION (EMAIL) <span>→</span></a>
+                <a href="mailto:faiqsyed594@gmail.com" target="_blank" class="contact-btn">SEND TRANSMISSION (EMAIL)
+                    <span>→</span></a>
             </div>
             <p style="color:#00ffcc; margin-top:30px; font-size:12px;">> WAITING FOR INCOMING SIGNAL...</p>
         </div>
@@ -924,12 +939,19 @@
             <div class="s-header">SYSTEM CORE</div>
             <div class="s-row">
                 <div class="s-label"><span>PERFORMANCE MODE</span></div>
-                <select id="i-perf" onchange="updateConfig('perf', this.value)">
-                    <option value="32000">ULTRA (32,000)</option>
-                    <option value="20000" selected>HIGH (20,000) - Recommended</option>
-                    <option value="12000">MEDIUM (12,000)</option>
-                    <option value="6000">LOW (6,000)</option>
-                </select>
+                <div class="tech-dropdown" id="perf-dropdown">
+                    <div class="tech-dropdown-selected" id="perf-selected" onclick="togglePerfDropdown()">HIGH (20,000)
+                        - Recommended</div>
+                    <div class="tech-dropdown-options">
+                        <div class="tech-option" onclick="selectPerfOption(32000, 'ULTRA (32,000)')">ULTRA (32,000)
+                        </div>
+                        <div class="tech-option" onclick="selectPerfOption(20000, 'HIGH (20,000) - Recommended')">HIGH
+                            (20,000) - Recommended</div>
+                        <div class="tech-option" onclick="selectPerfOption(12000, 'MEDIUM (12,000)')">MEDIUM (12,000)
+                        </div>
+                        <div class="tech-option" onclick="selectPerfOption(6000, 'LOW (6,000)')">LOW (6,000)</div>
+                    </div>
+                </div>
             </div>
 
             <!-- PARTICLE SPECTRUM -->
@@ -1125,6 +1147,7 @@
     <!-- SCRIPTS -->
     <script src="js/state.js"></script>
     <script src="js/ui.js"></script>
+    <script src="js/landing_bg.js"></script>
     <script src="js/core.js"></script>
     <script src="js/input.js"></script>
     <script src="js/app.js"></script>
