@@ -21,19 +21,19 @@ async function startAudio() {
                 audioElement = null;
             }
             analyser.disconnect();
-            
+
             analyser = audioContext.createAnalyser();
             analyser.fftSize = 256;
             analyser.smoothingTimeConstant = config.audioSmoothing;
             dataArray = new Uint8Array(analyser.frequencyBinCount);
-            
+
             const source = audioContext.createMediaStreamSource(globalStream);
             source.connect(analyser);
             audioSource = source;
             isAudioMode = true;
             isAudioFileMode = false;
             isPaused = false;
-            currentFileName = ""; 
+            currentFileName = "";
             document.getElementById('shape-name').innerText = "VISUALIZER (MIC)";
         } else {
             console.error("Global stream not found");
@@ -49,11 +49,11 @@ async function startAudioFile(file) {
     // --- FORCE RESET: CLEAR ALL MODES ---
     // This ensures that if Stealth, Supernova, or Face Scan is active,
     // they are immediately disabled so the Visualizer renders correctly.
-    faceLocked = false; 
-    isScanning = false; 
+    faceLocked = false;
+    isScanning = false;
     isFaceMode = false;
-    isSupernova = false; 
-    isStealthMode = false; 
+    isSupernova = false;
+    isStealthMode = false;
     stealthFactor = 0; // Reset brightness instantly
     pinchTimer = 0;
     isSecretActive = false;
@@ -85,35 +85,35 @@ async function startAudioFile(file) {
         audioElement.preload = 'auto';
         audioElement.style.display = 'none';
         document.body.appendChild(audioElement);
-        
+
         await new Promise((resolve, reject) => {
-            if (audioElement.readyState >= 2) { resolve(); } 
+            if (audioElement.readyState >= 2) { resolve(); }
             else {
                 audioElement.onloadedmetadata = resolve;
                 audioElement.onerror = reject;
                 setTimeout(resolve, 500);
             }
         });
-        
+
         if (analyser) { analyser.disconnect(); }
-        
+
         analyser = audioContext.createAnalyser();
-        analyser.fftSize = 512; 
-        analyser.minDecibels = -100; 
-        analyser.maxDecibels = -15; 
-        analyser.smoothingTimeConstant = config.audioSmoothing; 
+        analyser.fftSize = 512;
+        analyser.minDecibels = -100;
+        analyser.maxDecibels = -15;
+        analyser.smoothingTimeConstant = config.audioSmoothing;
 
         dataArray = new Uint8Array(analyser.frequencyBinCount);
-        
+
         const source = audioContext.createMediaElementSource(audioElement);
         source.connect(analyser);
-        analyser.connect(audioContext.destination); 
-        
+        analyser.connect(audioContext.destination);
+
         audioSource = source;
         isAudioMode = true;
         isAudioFileMode = true;
         isPaused = false;
-        
+
         currentFileName = file.name.toUpperCase();
         marqueeStart = Date.now();
         document.getElementById('shape-name').innerText = "VISUALIZER (FILE)";
@@ -129,8 +129,8 @@ async function startAudioFile(file) {
     }
 }
 
-function stopAudio() { 
-    isAudioMode = false; 
+function stopAudio() {
+    isAudioMode = false;
     isAudioFileMode = false;
     isPaused = false;
     currentFileName = "";
@@ -144,7 +144,7 @@ function stopAudio() {
         audioElement = null;
     }
     if (analyser && isAudioFileMode === false) { analyser.disconnect(); }
-    document.getElementById('shape-name').innerText = SHAPES[shapeIdx].toUpperCase(); 
+    document.getElementById('shape-name').innerText = SHAPES[shapeIdx].toUpperCase();
 }
 
 // --- FILE PICKER HANDLER (UPDATED) ---
@@ -173,7 +173,105 @@ function handleAudioFileUpload(event) {
 // --- DETECTION & TRACKING LOOP ---
 const colorCanvas = document.getElementById('color-canvas');
 const colorCtx = colorCanvas.getContext('2d', { willReadFrequently: true });
+const trackingCanvas = document.getElementById('tracking-canvas');
+const trackingCtx = trackingCanvas ? trackingCanvas.getContext('2d') : null;
 const d = (p1, p2) => Math.sqrt(Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2));
+
+// Initialize tracking canvas size
+function resizeTrackingCanvas() {
+    if (trackingCanvas) {
+        trackingCanvas.width = 320;
+        trackingCanvas.height = 240;
+    }
+}
+resizeTrackingCanvas();
+
+let lastHandResults = null;
+let lastFaceResults = null;
+
+function drawTrackingHighlights() {
+    if (!trackingCtx || !trackingCanvas) return;
+    trackingCtx.clearRect(0, 0, trackingCanvas.width, trackingCanvas.height);
+
+    const cyan = 'rgba(0, 255, 204, 0.8)';
+
+    // --- DRAW FACE OVERLAY ---
+    if (lastFaceResults && lastFaceResults.multiFaceLandmarks && lastFaceResults.multiFaceLandmarks.length > 0) {
+        const landmarks = lastFaceResults.multiFaceLandmarks[0];
+        trackingCtx.strokeStyle = cyan;
+        trackingCtx.lineWidth = 1;
+
+        // Minimal targeting brackets around face
+        let minX = 1, minY = 1, maxX = 0, maxY = 0;
+        landmarks.forEach(lm => {
+            if (lm.x < minX) minX = lm.x;
+            if (lm.x > maxX) maxX = lm.x;
+            if (lm.y < minY) minY = lm.y;
+            if (lm.y > maxY) maxY = lm.y;
+        });
+
+        const padding = 0.05;
+        const x = (minX - padding) * trackingCanvas.width;
+        const y = (minY - padding) * trackingCanvas.height;
+        const w = (maxX - minX + padding * 2) * trackingCanvas.width;
+        const h = (maxY - minY + padding * 2) * trackingCanvas.height;
+
+        // Draw corners
+        const cornerLen = 10;
+        trackingCtx.beginPath();
+        trackingCtx.moveTo(x, y + cornerLen); trackingCtx.lineTo(x, y); trackingCtx.lineTo(x + cornerLen, y);
+        trackingCtx.moveTo(x + w - cornerLen, y); trackingCtx.lineTo(x + w, y); trackingCtx.lineTo(x + w, y + cornerLen);
+        trackingCtx.moveTo(x + w, y + h - cornerLen); trackingCtx.lineTo(x + w, y + h); trackingCtx.lineTo(x + w - cornerLen, y + h);
+        trackingCtx.moveTo(x, y + h - cornerLen); trackingCtx.lineTo(x, y + h); trackingCtx.lineTo(x + cornerLen, y + h);
+        trackingCtx.stroke();
+
+        // Small text readout
+        trackingCtx.font = "bold 6px 'Courier New'";
+        trackingCtx.fillStyle = cyan;
+        trackingCtx.fillText("FACE_LOCK", x + 2, y - 4);
+
+        // Eye dots
+        [33, 263].forEach(idx => {
+            const lm = landmarks[idx];
+            trackingCtx.beginPath();
+            trackingCtx.arc(lm.x * trackingCanvas.width, lm.y * trackingCanvas.height, 1.5, 0, Math.PI * 2);
+            trackingCtx.fillStyle = cyan;
+            trackingCtx.fill();
+        });
+    }
+
+    // --- DRAW HAND OVERLAY ---
+    if (lastHandResults && lastHandResults.multiHandLandmarks) {
+        lastHandResults.multiHandLandmarks.forEach((landmarks, hIdx) => {
+            trackingCtx.strokeStyle = cyan;
+            trackingCtx.lineWidth = 1;
+
+            // Small text readout near wrist
+            const wrist = landmarks[0];
+            trackingCtx.font = "bold 6px 'Courier New'";
+            trackingCtx.fillStyle = cyan;
+            trackingCtx.fillText(`H_${hIdx}_SCAN`, wrist.x * trackingCanvas.width + 5, wrist.y * trackingCanvas.height);
+
+            const fingerTips = [4, 8, 12, 16, 20];
+            fingerTips.forEach(tipIdx => {
+                const tip = landmarks[tipIdx];
+                const pip = landmarks[tipIdx - 2];
+
+                // Fine line from tip to joint
+                trackingCtx.beginPath();
+                trackingCtx.moveTo(pip.x * trackingCanvas.width, pip.y * trackingCanvas.height);
+                trackingCtx.lineTo(tip.x * trackingCanvas.width, tip.y * trackingCanvas.height);
+                trackingCtx.stroke();
+
+                // Small dot at tip
+                trackingCtx.beginPath();
+                trackingCtx.arc(tip.x * trackingCanvas.width, tip.y * trackingCanvas.height, 2, 0, Math.PI * 2);
+                trackingCtx.fillStyle = cyan;
+                trackingCtx.fill();
+            });
+        });
+    }
+}
 
 async function runDetection() {
     if (!isDetectionRunning) return;
@@ -190,6 +288,9 @@ faceMesh = new FaceMesh({ locateFile: (file) => `https://cdn.jsdelivr.net/npm/@m
 faceMesh.setOptions({ maxNumFaces: 1, refineLandmarks: true, minDetectionConfidence: 0.5, minTrackingConfidence: 0.5 });
 
 faceMesh.onResults(results => {
+    lastFaceResults = results;
+    drawTrackingHighlights();
+
     colorCtx.drawImage(results.image, 0, 0, 320, 240);
     const frameData = colorCtx.getImageData(0, 0, 320, 240).data;
 
@@ -221,12 +322,12 @@ faceMesh.onResults(results => {
             const g = frameData[pIdx + 1];
             const b = frameData[pIdx + 2];
             let luma = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
-            luma = luma * 3.5; 
+            luma = luma * 3.5;
             if (luma > 1.0) luma = 1.0;
 
-            faceColorArray[i3]     = luma * 0.9; 
-            faceColorArray[i3 + 1] = luma * 0.95; 
-            faceColorArray[i3 + 2] = luma * 1.0 + 0.15; 
+            faceColorArray[i3] = luma * 0.9;
+            faceColorArray[i3 + 1] = luma * 0.95;
+            faceColorArray[i3 + 2] = luma * 1.0 + 0.15;
         }
     } else {
         faceLandmarks = null;
@@ -238,6 +339,9 @@ hands = new Hands({ locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapi
 hands.setOptions({ maxNumHands: 2, modelComplexity: config.modelComplexity, minDetectionConfidence: 0.6, minTrackingConfidence: 0.6 });
 
 hands.onResults(results => {
+    lastHandResults = results;
+    drawTrackingHighlights();
+
     const numHands = results.multiHandLandmarks ? results.multiHandLandmarks.length : 0;
 
     if ((numHands === 1 || numHands === 2) && document.getElementById('start-hint')) {
@@ -319,7 +423,7 @@ hands.onResults(results => {
     if (isSupernova && (hand.gesture !== 'FIST' && hand.gesture !== 'PEACE' && hand.gesture !== 'OPEN')) {
         hand.gesture = 'SUPERNOVA_LOCKED';
     }
-    
+
     // Audio Mode Gesture Locking
     if (isAudioMode) {
         if (isAudioFileMode) {
@@ -341,7 +445,7 @@ hands.onResults(results => {
     if (uiGest === 'THUMB') uiGest = 'SCAN DETECTED';
     if (uiGest === 'SHHH') uiGest = 'STEALTH MODE';
     if (uiGest === 'AUDIO_TRIG') uiGest = 'MIC TOGGLE';
-    
+
     // Marquee Scrolling Logic
     if (uiGest === 'AUDIO_LOCKED' || (isAudioFileMode && uiGest === 'THREE')) {
         if (isAudioFileMode && currentFileName) {
@@ -352,13 +456,13 @@ hands.onResults(results => {
                 if (currentFileName.length <= maxLen) {
                     uiGest = currentFileName;
                 } else {
-                    const spacer = "   "; 
+                    const spacer = "   ";
                     const fullStr = currentFileName + spacer;
                     const scrollSpeed = 4; // Characters per second
                     const time = (Date.now() - marqueeStart) / 1000;
                     const offset = Math.floor(time * scrollSpeed);
                     const idx = offset % fullStr.length;
-                    
+
                     const doubleStr = fullStr + fullStr;
                     uiGest = doubleStr.substring(idx, idx + maxLen);
                 }
@@ -367,7 +471,7 @@ hands.onResults(results => {
             uiGest = 'AUDIO ACTIVE';
         }
     }
-    
+
     if (uiGest === 'SUPERNOVA_LOCKED') uiGest = 'SUPERNOVA';
     if (uiGest === 'STEALTH_LOCKED') uiGest = 'SILENCED';
     if (isScanning) uiGest = "INITIALIZING...";
@@ -389,7 +493,7 @@ hands.onResults(results => {
     } else if (isAudioMode) {
         ctrls['c-zoom'] = false; ctrls['c-pinch'] = false; ctrls['c-rock'] = false;
         ctrls['c-supernova'] = false; ctrls['c-shhh'] = false; ctrls['c-thumb'] = false; ctrls['c-mic'] = false;
-        
+
         // Enable THREE only in File Mode
         if (isAudioFileMode) {
             ctrls['c-three'] = true;

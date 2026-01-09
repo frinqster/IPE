@@ -1,7 +1,7 @@
 // --- LANDING PAGE BACKGROUND & CURSOR ---
 (function () {
     // Configuration
-    const BG_PARTICLE_COUNT = 80;
+    // Configuration
     const CONNECTION_DIST = 150;
     const BG_MOUSE_RADIUS = 200;
     const BG_PARTICLE_COLOR = 'rgba(0, 255, 204, 0.7)'; // #00ffcc
@@ -9,7 +9,7 @@
 
     // Enhancement Config
     const FLOATING_SHAPE_COUNT = 6;
-    const DATA_STREAM_CHANCE = 0.02; // Chance per frame to spawn a data stream
+    const DATA_STREAM_CHANCE = 0.04; // Chance per frame to spawn a data stream
 
     // Variables
     let bgCanvas;
@@ -149,7 +149,8 @@
             '.gesture-item',        // Gesture cards
             '#vib-toggle-btn',      // Vibration toggle
             '#blur-toggle-btn',     // Blur toggle
-            '#cam-swap-btn'         // Layout swap button
+            '#cam-swap-btn',        // Layout swap button
+            '#cam-resize-handle'    // Camera resize handle
         ];
         const clickables = document.querySelectorAll(selectorList.join(', '));
         clickables.forEach(el => {
@@ -339,7 +340,7 @@
     function initBgParticles() {
         if (!bgCanvas) return;
         bgParticlesArray = [];
-        let numberOfParticles = (bgCanvas.height * bgCanvas.width) / 15000;
+        let numberOfParticles = (bgCanvas.height * bgCanvas.width) / 8000;
         for (let i = 0; i < numberOfParticles; i++) {
             bgParticlesArray.push(new BgParticle());
         }
@@ -390,8 +391,8 @@
                 let distance = ((bgParticlesArray[a].x - bgParticlesArray[b].x) * (bgParticlesArray[a].x - bgParticlesArray[b].x)) +
                     ((bgParticlesArray[a].y - bgParticlesArray[b].y) * (bgParticlesArray[a].y - bgParticlesArray[b].y));
 
-                if (distance < (bgCanvas.width / 7) * (bgCanvas.height / 7)) {
-                    opacityValue = 1 - (distance / 20000);
+                if (distance < (bgCanvas.width / 6) * (bgCanvas.height / 6)) {
+                    opacityValue = 1 - (distance / ((bgCanvas.width / 6) * (bgCanvas.height / 6)));
                     if (opacityValue > 0) {
                         bgCtx.strokeStyle = BG_LINE_COLOR + opacityValue + ')';
                         bgCtx.lineWidth = 1;

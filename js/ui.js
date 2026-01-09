@@ -739,3 +739,72 @@ function jumpToGesture(event, id) {
         el.classList.add('highlight-flash');
     }
 }
+
+// --- CAMERA RESIZE LOGIC ---
+function initCamResize() {
+    const handle = document.getElementById('cam-resize-handle');
+    const view = document.getElementById('cam-view');
+    if (!handle || !view) return;
+
+    let isResizing = false;
+    let startX, startY, startW, startH;
+
+    handle.addEventListener('mousedown', (e) => {
+        isResizing = true;
+        startX = e.clientX;
+        startY = e.clientY;
+        startW = view.offsetWidth;
+        startH = view.offsetHeight;
+
+        // Prevent interactions during resize
+        document.body.style.cursor = 'nesw-resize';
+        view.style.userSelect = 'none';
+
+        document.addEventListener('mousemove', handleMouseMove);
+        document.addEventListener('mouseup', handleMouseUp);
+        e.preventDefault();
+        e.stopPropagation();
+    });
+
+    function handleMouseMove(e) {
+        if (!isResizing) return;
+
+        const dw = e.clientX - startX;
+        const dh = startY - e.clientY; // Pulling UP increases height
+
+        // Preserve 4:3 aspect ratio
+        let newW, newH;
+        if (Math.abs(dw) > Math.abs(dh)) {
+            newW = Math.max(120, Math.min(640, startW + dw));
+            newH = newW * 0.75;
+        } else {
+            newH = Math.max(90, Math.min(480, startH + dh));
+            newW = newH * 1.3333;
+        }
+
+        // Final bounds enforcement
+        if (newW > 640) { newW = 640; newH = 480; }
+        if (newH > 480) { newH = 480; newW = 640; }
+        if (newW < 120) { newW = 120; newH = 90; }
+        if (newH < 90) { newH = 90; newW = 120; }
+
+        view.style.width = newW + 'px';
+        view.style.height = newH + 'px';
+    }
+
+    function handleMouseUp() {
+        if (!isResizing) return;
+        isResizing = false;
+        document.body.style.cursor = 'default';
+        view.style.userSelect = 'auto';
+        document.removeEventListener('mousemove', handleMouseMove);
+        document.removeEventListener('mouseup', handleMouseUp);
+    }
+}
+
+// Initialize
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initCamResize);
+} else {
+    initCamResize();
+}

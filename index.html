@@ -427,15 +427,21 @@
             <div class="gesture-grid">
 
                 <div class="gesture-item">
-                    <div class="g-header"><span class="g-title">OPTICAL CAPTURE</span></div>
-                    <span class="g-desc">Takes a high-res .PNG screenshot of the system (UI hidden).</span>
-                    <span class="g-how">Click the 📷 Camera Icon.</span>
-                </div>
-
-                <div class="gesture-item">
                     <div class="g-header"><span class="g-title">LAYOUT SWAP</span></div>
                     <span class="g-desc">Swaps the position of the Camera Feed and the HUD ELEMENTS.</span>
                     <span class="g-how">Click the ⇄ Arrows on the camera feed.</span>
+                </div>
+
+                <div class="gesture-item">
+                    <div class="g-header"><span class="g-title">CAMERA RESIZE</span></div>
+                    <span class="g-desc">Adjust the size of the camera feed (Aspect Ratio is Locked).</span>
+                    <span class="g-how">Drag the cyan corner handle on the camera feed.</span>
+                </div>
+
+                <div class="gesture-item">
+                    <div class="g-header"><span class="g-title">OPTICAL CAPTURE</span></div>
+                    <span class="g-desc">Takes a high-res .PNG screenshot of the system (UI hidden).</span>
+                    <span class="g-how">Click the 📷 Camera Icon.</span>
                 </div>
 
                 <div class="gesture-item">
@@ -1137,6 +1143,8 @@
             <div id="cam-view">
                 <div id="cam-swap-btn" onclick="toggleCamPos()">⇄</div>
                 <video id="input-video" playsinline muted></video>
+                <canvas id="tracking-canvas"></canvas>
+                <div id="cam-resize-handle"></div>
             </div>
         </div>
     </div>
