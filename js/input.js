@@ -230,12 +230,60 @@ function drawTrackingHighlights() {
         trackingCtx.fillStyle = cyan;
         trackingCtx.fillText("FACE_LOCK", x + 2, y - 4);
 
-        // Eye dots
-        [33, 263].forEach(idx => {
+        // Ocular & Facial Node Network
+        const faceNodes = [
+            33, 263, // Eye inner
+            159, 145, 386, 374, // Eye perimeters
+            70, 107, 300, 336, // Eyebrow outer/inner
+            123, 352, // Cheeks
+            152, // Chin
+            10 // Forehead
+        ];
+
+        faceNodes.forEach(idx => {
             const lm = landmarks[idx];
             trackingCtx.beginPath();
-            trackingCtx.arc(lm.x * trackingCanvas.width, lm.y * trackingCanvas.height, 1.5, 0, Math.PI * 2);
-            trackingCtx.fillStyle = cyan;
+            trackingCtx.arc(lm.x * trackingCanvas.width, lm.y * trackingCanvas.height, 1, 0, Math.PI * 2);
+            trackingCtx.fillStyle = 'rgba(0, 255, 204, 0.7)';
+            trackingCtx.fill();
+        });
+
+        // Faint connecting lines for "Neural Mesh" vibe
+        trackingCtx.strokeStyle = 'rgba(0, 255, 204, 0.15)';
+        trackingCtx.lineWidth = 0.5;
+        trackingCtx.beginPath();
+        // Brow to Nose
+        trackingCtx.moveTo(landmarks[107].x * trackingCanvas.width, landmarks[107].y * trackingCanvas.height);
+        trackingCtx.lineTo(landmarks[1].x * trackingCanvas.width, landmarks[1].y * trackingCanvas.height);
+        trackingCtx.lineTo(landmarks[300].x * trackingCanvas.width, landmarks[300].y * trackingCanvas.height);
+        // Cheek to Chin
+        trackingCtx.moveTo(landmarks[123].x * trackingCanvas.width, landmarks[123].y * trackingCanvas.height);
+        trackingCtx.lineTo(landmarks[152].x * trackingCanvas.width, landmarks[152].y * trackingCanvas.height);
+        trackingCtx.lineTo(landmarks[352].x * trackingCanvas.width, landmarks[352].y * trackingCanvas.height);
+        trackingCtx.stroke();
+
+        // Nose marker (tip)
+        const nose = landmarks[1];
+        trackingCtx.beginPath();
+        trackingCtx.arc(nose.x * trackingCanvas.width, nose.y * trackingCanvas.height, 1.2, 0, Math.PI * 2);
+        trackingCtx.fillStyle = cyan;
+        trackingCtx.fill();
+
+        // Crosshair for nose
+        const nx = nose.x * trackingCanvas.width;
+        const ny = nose.y * trackingCanvas.height;
+        trackingCtx.beginPath();
+        trackingCtx.moveTo(nx - 3, ny); trackingCtx.lineTo(nx + 3, ny);
+        trackingCtx.moveTo(nx, ny - 3); trackingCtx.lineTo(nx, ny + 3);
+        trackingCtx.strokeStyle = 'rgba(0, 255, 204, 0.5)';
+        trackingCtx.stroke();
+
+        // Lip markers
+        [61, 291, 0, 17].forEach(idx => {
+            const lm = landmarks[idx];
+            trackingCtx.beginPath();
+            trackingCtx.arc(lm.x * trackingCanvas.width, lm.y * trackingCanvas.height, 0.8, 0, Math.PI * 2);
+            trackingCtx.fillStyle = 'rgba(0, 255, 204, 0.8)';
             trackingCtx.fill();
         });
     }

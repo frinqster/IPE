@@ -1808,18 +1808,40 @@ select:focus {
     position: absolute;
     top: 0;
     right: 0;
-    width: 15px;
-    height: 15px;
+    width: 18px;
+    height: 18px;
     cursor: nesw-resize;
     z-index: 105;
-    background: linear-gradient(225deg, #00ffcc 50%, transparent 50%);
+    background: linear-gradient(225deg, #fff 15%, #00ffcc 15%, #00ffcc 30%, transparent 30%, transparent 45%, #00ffcc 45%, #00ffcc 60%, transparent 60%);
     border-top-right-radius: 4px;
-    opacity: 0.5;
-    transition: opacity 0.2s;
+    opacity: 0.8;
+    transition: all 0.3s;
+    box-shadow: -2px 2px 10px rgba(0, 255, 204, 0.4);
+    animation: handle-pulse 2s infinite;
+}
+
+@keyframes handle-pulse {
+    0% {
+        opacity: 0.6;
+        box-shadow: -2px 2px 10px rgba(0, 255, 204, 0.4);
+    }
+
+    50% {
+        opacity: 1;
+        box-shadow: -4px 4px 15px rgba(0, 255, 204, 0.8);
+    }
+
+    100% {
+        opacity: 0.6;
+        box-shadow: -2px 2px 10px rgba(0, 255, 204, 0.4);
+    }
 }
 
 #cam-resize-handle:hover {
     opacity: 1;
+    width: 20px;
+    height: 20px;
+    animation: none;
 }
 
 #input-video {
