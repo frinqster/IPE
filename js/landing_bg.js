@@ -148,7 +148,8 @@
             '.close-modal',         // Close buttons
             '.gesture-item',        // Gesture cards
             '#vib-toggle-btn',      // Vibration toggle
-            '#blur-toggle-btn'      // Blur toggle
+            '#blur-toggle-btn',     // Blur toggle
+            '#cam-swap-btn'         // Layout swap button
         ];
         const clickables = document.querySelectorAll(selectorList.join(', '));
         clickables.forEach(el => {

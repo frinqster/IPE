@@ -37,21 +37,32 @@ function showPerfSelector() {
                     opt.classList.add('visible');
                 }, 500);
             }, index * 100);
+
+            // Add mouseleave handler to clear selection when not in keyboard mode
+            opt.addEventListener('mouseleave', () => {
+                if (!selector.classList.contains('keyboard-active')) {
+                    opt.classList.remove('selected');
+                }
+            });
         });
 
-        perfSelectionIndex = 1;
-        updatePerfVisuals();
+        // Don't set initial selection - let user interact first
+        perfSelectionIndex = 1; // Default for keyboard, but don't show visually
         document.addEventListener('keydown', handlePerfKey);
     }, 400);
 }
 
 function handlePerfKey(e) {
     const options = document.querySelectorAll('.perf-option');
+    const selector = document.getElementById('perf-selector');
+
     if (e.key === 'ArrowDown') {
         perfSelectionIndex = (perfSelectionIndex + 1) % options.length;
+        if (selector) selector.classList.add('keyboard-active');
         updatePerfVisuals();
     } else if (e.key === 'ArrowUp') {
         perfSelectionIndex = (perfSelectionIndex - 1 + options.length) % options.length;
+        if (selector) selector.classList.add('keyboard-active');
         updatePerfVisuals();
     } else if (e.key === 'Enter') {
         options[perfSelectionIndex].click();
@@ -67,6 +78,9 @@ function updatePerfVisuals() {
 }
 
 function setPerfIndex(i) {
+    // Mouse hover reactivates mouse mode, disable keyboard-active class
+    const selector = document.getElementById('perf-selector');
+    if (selector) selector.classList.remove('keyboard-active');
     perfSelectionIndex = i;
     updatePerfVisuals();
 }

@@ -695,8 +695,8 @@ canvas {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.95);
-    backdrop-filter: blur(8px);
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(5px);
     z-index: 6005;
     overflow-y: auto;
     color: #ddd;
@@ -1930,6 +1930,8 @@ a {
     z-index: 9999;
     box-shadow: 0 0 10px #00ffcc;
     transition: width 0.2s, height 0.2s, background-color 0.2s;
+    opacity: 0;
+    /* Hidden until first mouse move */
 }
 
 .cursor-outline {
@@ -1944,6 +1946,8 @@ a {
     pointer-events: none;
     z-index: 9998;
     transition: width 0.2s, height 0.2s, background-color 0.2s, border-color 0.2s;
+    opacity: 0;
+    /* Hidden until first mouse move */
 }
 
 /* Hover State */
@@ -2277,6 +2281,23 @@ input[type="range"]:hover {
     background: rgba(0, 255, 204, 0.1);
     transform: translateX(10px) scale(1.02);
     box-shadow: 0 0 20px rgba(0, 255, 204, 0.3);
+}
+
+/* Disable hover effects when using keyboard navigation */
+#perf-selector.keyboard-active .perf-option:hover {
+    background: transparent;
+    transform: none;
+    box-shadow: none;
+}
+
+#perf-selector.keyboard-active .perf-option:hover .p-name {
+    text-shadow: none;
+}
+
+/* Ensure selected styling still applies even when hover is disabled */
+#perf-selector.keyboard-active .perf-option.selected:hover {
+    background: rgba(0, 255, 204, 0.1);
+    box-shadow: 0 0 10px rgba(0, 255, 204, 0.2);
 }
 
 .perf-option .p-name {
