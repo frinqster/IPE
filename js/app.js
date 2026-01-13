@@ -15,7 +15,6 @@ function launchSystem(selectedCount) {
     }
 
     // Dynamic Blur Strength adjustment based on Performance Tier
-    // Lower particle counts get stronger trails to fill the gaps
     let newBlurStr = 0.75;
     if (selectedCount <= 6000) {
         newBlurStr = 0.75; // Low [6K]
@@ -83,7 +82,7 @@ function launchSystem(selectedCount) {
             loader.classList.add('visible');
             initializeSystem();
         }, totalExitTime);
-    }, 350); // Wait for confirmation pulse
+    }, 350); 
 }
 
 function initializeSystem() {
@@ -122,6 +121,10 @@ function initializeSystem() {
                 isDetectionRunning = true;
                 initParticles(config.particleCount);
                 runDetection();
+                
+                // --- TRIGGER BACKGROUND PRELOAD ---
+                // Now that the system is running, we silently load all models
+                preloadAllModels(); 
             };
 
             clearInterval(fakeLoader);
@@ -203,7 +206,7 @@ function animate() {
         peaceTimer = 0;
     }
 
-    // 3. SECRET BUFFER (NEW)
+    // 3. SECRET BUFFER
     if (hand.gesture === 'SECRET') {
         secretBufferTimer += dt;
     } else {

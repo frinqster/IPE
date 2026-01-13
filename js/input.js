@@ -1,4 +1,4 @@
-// --- START OF FILE input.js ---
+// --- START OF FILE js/input.js ---
 
 // --- AUDIO HANDLER ---
 async function startAudio() {
@@ -47,18 +47,15 @@ async function startAudio() {
 
 async function startAudioFile(file) {
     // --- FORCE RESET: CLEAR ALL MODES ---
-    // This ensures that if Stealth, Supernova, or Face Scan is active,
-    // they are immediately disabled so the Visualizer renders correctly.
     faceLocked = false;
     isScanning = false;
     isFaceMode = false;
     isSupernova = false;
     isStealthMode = false;
-    stealthFactor = 0; // Reset brightness instantly
+    stealthFactor = 0; 
     pinchTimer = 0;
     isSecretActive = false;
-    isResetting = false; // Stop any ongoing camera reset
-    // ------------------------------------
+    isResetting = false; 
 
     try {
         const hint = document.getElementById('start-hint');
@@ -147,7 +144,7 @@ function stopAudio() {
     document.getElementById('shape-name').innerText = SHAPES[shapeIdx].toUpperCase();
 }
 
-// --- FILE PICKER HANDLER (UPDATED) ---
+// --- FILE PICKER HANDLER ---
 function handleAudioFileUpload(event) {
     const file = event.target.files[0];
     if (file) {
@@ -155,7 +152,6 @@ function handleAudioFileUpload(event) {
             startAudioFile(file);
         } else {
             console.warn('Selected file is not an audio file');
-            // Feedback via the HUD since overlay isn't active
             const shapeName = document.getElementById('shape-name');
             const oldText = shapeName.innerText;
             shapeName.innerText = "FILE NOT SUPPORTED";
@@ -177,7 +173,6 @@ const trackingCanvas = document.getElementById('tracking-canvas');
 const trackingCtx = trackingCanvas ? trackingCanvas.getContext('2d') : null;
 const d = (p1, p2) => Math.sqrt(Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2));
 
-// Initialize tracking canvas size
 function resizeTrackingCanvas() {
     if (trackingCanvas) {
         trackingCanvas.width = 320;
@@ -201,7 +196,7 @@ function drawTrackingHighlights() {
         trackingCtx.strokeStyle = cyan;
         trackingCtx.lineWidth = 1;
 
-        // Minimal targeting brackets around face
+        // Targeting Brackets
         let minX = 1, minY = 1, maxX = 0, maxY = 0;
         landmarks.forEach(lm => {
             if (lm.x < minX) minX = lm.x;
@@ -216,7 +211,6 @@ function drawTrackingHighlights() {
         const w = (maxX - minX + padding * 2) * trackingCanvas.width;
         const h = (maxY - minY + padding * 2) * trackingCanvas.height;
 
-        // Draw corners
         const cornerLen = 10;
         trackingCtx.beginPath();
         trackingCtx.moveTo(x, y + cornerLen); trackingCtx.lineTo(x, y); trackingCtx.lineTo(x + cornerLen, y);
@@ -225,7 +219,6 @@ function drawTrackingHighlights() {
         trackingCtx.moveTo(x, y + h - cornerLen); trackingCtx.lineTo(x, y + h); trackingCtx.lineTo(x + cornerLen, y + h);
         trackingCtx.stroke();
 
-        // Small text readout
         trackingCtx.font = "bold 6px 'Courier New'";
         trackingCtx.fillStyle = cyan;
         trackingCtx.fillText("FACE_LOCK", x + 2, y - 4);
@@ -248,28 +241,26 @@ function drawTrackingHighlights() {
             trackingCtx.fill();
         });
 
-        // Faint connecting lines for "Neural Mesh" vibe
+        // Connecting lines
         trackingCtx.strokeStyle = 'rgba(0, 255, 204, 0.15)';
         trackingCtx.lineWidth = 0.5;
         trackingCtx.beginPath();
-        // Brow to Nose
         trackingCtx.moveTo(landmarks[107].x * trackingCanvas.width, landmarks[107].y * trackingCanvas.height);
         trackingCtx.lineTo(landmarks[1].x * trackingCanvas.width, landmarks[1].y * trackingCanvas.height);
         trackingCtx.lineTo(landmarks[300].x * trackingCanvas.width, landmarks[300].y * trackingCanvas.height);
-        // Cheek to Chin
         trackingCtx.moveTo(landmarks[123].x * trackingCanvas.width, landmarks[123].y * trackingCanvas.height);
         trackingCtx.lineTo(landmarks[152].x * trackingCanvas.width, landmarks[152].y * trackingCanvas.height);
         trackingCtx.lineTo(landmarks[352].x * trackingCanvas.width, landmarks[352].y * trackingCanvas.height);
         trackingCtx.stroke();
 
-        // Nose marker (tip)
+        // Nose
         const nose = landmarks[1];
         trackingCtx.beginPath();
         trackingCtx.arc(nose.x * trackingCanvas.width, nose.y * trackingCanvas.height, 1.2, 0, Math.PI * 2);
         trackingCtx.fillStyle = cyan;
         trackingCtx.fill();
 
-        // Crosshair for nose
+        // Nose Crosshair
         const nx = nose.x * trackingCanvas.width;
         const ny = nose.y * trackingCanvas.height;
         trackingCtx.beginPath();
@@ -278,12 +269,15 @@ function drawTrackingHighlights() {
         trackingCtx.strokeStyle = 'rgba(0, 255, 204, 0.5)';
         trackingCtx.stroke();
 
-        // Lip markers
-        [61, 291, 0, 17].forEach(idx => {
+        // --- LIP MARKERS (ENSURE THESE ARE HERE) ---
+        // 61: Left Corner, 291: Right Corner, 0: Top Lip, 17: Bottom Lip
+        const lipIndices = [61, 291, 0, 17]; 
+        lipIndices.forEach(idx => {
             const lm = landmarks[idx];
             trackingCtx.beginPath();
-            trackingCtx.arc(lm.x * trackingCanvas.width, lm.y * trackingCanvas.height, 0.8, 0, Math.PI * 2);
-            trackingCtx.fillStyle = 'rgba(0, 255, 204, 0.8)';
+            // Draw a slightly larger dot for lips to ensure visibility
+            trackingCtx.arc(lm.x * trackingCanvas.width, lm.y * trackingCanvas.height, 1.5, 0, Math.PI * 2);
+            trackingCtx.fillStyle = 'rgba(0, 255, 204, 0.9)'; // High opacity
             trackingCtx.fill();
         });
     }
@@ -294,7 +288,6 @@ function drawTrackingHighlights() {
             trackingCtx.strokeStyle = cyan;
             trackingCtx.lineWidth = 1;
 
-            // Small text readout near wrist
             const wrist = landmarks[0];
             trackingCtx.font = "bold 6px 'Courier New'";
             trackingCtx.fillStyle = cyan;
@@ -305,13 +298,11 @@ function drawTrackingHighlights() {
                 const tip = landmarks[tipIdx];
                 const pip = landmarks[tipIdx - 2];
 
-                // Fine line from tip to joint
                 trackingCtx.beginPath();
                 trackingCtx.moveTo(pip.x * trackingCanvas.width, pip.y * trackingCanvas.height);
                 trackingCtx.lineTo(tip.x * trackingCanvas.width, tip.y * trackingCanvas.height);
                 trackingCtx.stroke();
 
-                // Small dot at tip
                 trackingCtx.beginPath();
                 trackingCtx.arc(tip.x * trackingCanvas.width, tip.y * trackingCanvas.height, 2, 0, Math.PI * 2);
                 trackingCtx.fillStyle = cyan;
@@ -472,15 +463,12 @@ hands.onResults(results => {
         hand.gesture = 'SUPERNOVA_LOCKED';
     }
 
-    // Audio Mode Gesture Locking
     if (isAudioMode) {
         if (isAudioFileMode) {
-            // Allow THREE for Play/Pause in File Mode
             if (hand.gesture !== 'FIST' && hand.gesture !== 'PEACE' && hand.gesture !== 'OPEN' && hand.gesture !== 'THREE') {
                 hand.gesture = 'AUDIO_LOCKED';
             }
         } else {
-            // Standard Mic Mode
             if (hand.gesture !== 'FIST' && hand.gesture !== 'PEACE' && hand.gesture !== 'OPEN') {
                 hand.gesture = 'AUDIO_LOCKED';
             }
@@ -494,7 +482,6 @@ hands.onResults(results => {
     if (uiGest === 'SHHH') uiGest = 'STEALTH MODE';
     if (uiGest === 'AUDIO_TRIG') uiGest = 'MIC TOGGLE';
 
-    // Marquee Scrolling Logic
     if (uiGest === 'AUDIO_LOCKED' || (isAudioFileMode && uiGest === 'THREE')) {
         if (isAudioFileMode && currentFileName) {
             if (isPaused) {
@@ -506,7 +493,7 @@ hands.onResults(results => {
                 } else {
                     const spacer = "   ";
                     const fullStr = currentFileName + spacer;
-                    const scrollSpeed = 4; // Characters per second
+                    const scrollSpeed = 4; 
                     const time = (Date.now() - marqueeStart) / 1000;
                     const offset = Math.floor(time * scrollSpeed);
                     const idx = offset % fullStr.length;
@@ -542,7 +529,6 @@ hands.onResults(results => {
         ctrls['c-zoom'] = false; ctrls['c-pinch'] = false; ctrls['c-rock'] = false;
         ctrls['c-supernova'] = false; ctrls['c-shhh'] = false; ctrls['c-thumb'] = false; ctrls['c-mic'] = false;
 
-        // Enable THREE only in File Mode
         if (isAudioFileMode) {
             ctrls['c-three'] = true;
         } else {
@@ -561,7 +547,6 @@ hands.onResults(results => {
         el.classList.remove('active');
     }
 
-    // Dynamic Labels
     const threeLabel = document.querySelector('#c-three .c-action');
     if (isAudioFileMode) threeLabel.innerText = "PLAY / PAUSE";
     else threeLabel.innerText = "TIME FREEZE";
