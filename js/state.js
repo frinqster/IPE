@@ -40,6 +40,7 @@ let config = { ...defaults };
 // --- SHAPE CONFIGURATION ---
 const SHAPES = [
 
+    
     // ────────── BASIC GEOMETRY (MATHS) ────────── 
     'Sphere',
     'Cube',
@@ -74,9 +75,17 @@ const SHAPES = [
     'Saddle Surface',
 
     // ────────── ABSTRACT / TOPOLOGY (MODEL) ────────── 
+    'Tesseract',
+    'Abstract Tesseract',
     'Metatron Cube',
     'Fractal',
     'Julia Set',
+    'Fractal Dragon',
+    'Thomas Attractor',
+    'Butterfly Curve',
+    'Torus Arch',
+    'Torus Knot',
+    'Triquetra',
     'Mobius Strip',
     'Klein Bottle',
 
@@ -90,11 +99,22 @@ const SHAPES = [
     'Brain',
     'Human Heart',
     'Hand',
+    'Foot',
     'Skull',
     'Human',
 
-    // ────────── OBJECTS (MODEL) ────────── 
+    // ────────── NATURE (MODEL) ────────── 
+    'Leaf',
+    'Tree',
+
+    // ────────── OBJECTS / SYMBOLIC ITEMS (MODEL) ────────── 
+    'Zangetsu',
+    'Hylian Shield',
+    'Arc Reactor',
+    'Mjolnir',
+    'Gear',
     'Shoe',
+    'Airplane',
 
     // ────────── COSMIC SCALE (MATHS & MODEL) ────────── 
     'Saturn',
@@ -105,7 +125,19 @@ const SHAPES = [
 // Define URL, Rotation (in Radians), and Scale multiplier for each model.
 const MODEL_CONFIG = {
 
-    // ────────── ABSTRACT / TOPOLOGY ────────── 
+    
+
+    // ────────── ABSTRACT / TOPOLOGY ──────────
+    'Tesseract': {
+        url: 'Assets/Models/tesseract.glb',
+        rotation: { x: 0, y: 0, z: 0 },
+        scale: 1.0
+    }, 
+    'Abstract Tesseract': {
+        url: 'Assets/Models/abstract_tesseract.glb',
+        rotation: { x: 0, y: 0, z: 0 },
+        scale: 1.0
+    },
     'Metatron Cube': {
         url: 'Assets/Models/metatron_cube.glb',
         rotation: { x: -Math.PI / 2, y: 0, z: 0 },
@@ -118,6 +150,36 @@ const MODEL_CONFIG = {
     },
     'Julia Set': {
         url: 'Assets/Models/julia_set.glb',
+        rotation: { x: 0, y: 0, z: 0 },
+        scale: 1.5
+    },
+    'Fractal Dragon': {
+        url: 'Assets/Models/fractal_dragon.glb',
+        rotation: { x: Math.PI / 2, y: 0, z: 0 },
+        scale: 1.5
+    },
+    'Thomas Attractor': {
+        url: 'Assets/Models/thomas_attractor.glb',
+        rotation: { x: 0, y: 0, z: 0 },
+        scale: 1.5
+    },
+    'Butterfly Curve': {
+        url: 'Assets/Models/butterfly_curve.glb',
+        rotation: { x: -Math.PI / 2, y: 0, z: 0 },
+        scale: 1.5
+    },
+    'Torus Arch': {
+        url: 'Assets/Models/torus_arch.glb',
+        rotation: { x: -Math.PI / 2, y: 0, z: 0 },
+        scale: 1.5
+    },
+    'Torus Knot': {
+        url: 'Assets/Models/torus_knot.glb',
+        rotation: { x: 0, y: 0, z: 0 },
+        scale: 1.5
+    },
+    'Triquetra': {
+        url: 'Assets/Models/triquetra.glb',
         rotation: { x: 0, y: 0, z: 0 },
         scale: 1.5
     },
@@ -170,6 +232,11 @@ const MODEL_CONFIG = {
         rotation: { x: -Math.PI / 2, y: 0, z: 0 },
         scale: 1.5
     },
+    'Foot': {
+        url: 'Assets/Models/foot.glb',
+        rotation: { x: -Math.PI / 2, y: 0, z: 0 },
+        scale: 1.5
+    },
     'Skull': {
         url: 'Assets/Models/skull.glb',
         rotation: { x: -Math.PI / 2, y: 0, z: 0 },
@@ -181,10 +248,52 @@ const MODEL_CONFIG = {
         scale: 1.5
     },
 
+    // ────────── NATURE ──────────
+    'Leaf': {
+        url: 'Assets/Models/leaf.glb',
+        rotation: { x: 0, y: 0, z: 0 },
+        scale: 1.5
+    },
+    'Tree': {
+        url: 'Assets/Models/tree.glb',
+        rotation: { x: -Math.PI / 2, y: 0, z: 0 },
+        scale: 1.5
+    },
+
     // ────────── OBJECTS / SYMBOLIC ITEMS ────────── 
+    'Zangetsu': {
+        url: 'Assets/Models/zangetsu.glb',
+        rotation: { x: 0, y: 0, z: -Math.PI / 2 },
+        scale: 1.5
+    },
+    'Hylian Shield': {
+        url: 'Assets/Models/hylian_shield.glb',
+        rotation: { x: 0, y: 0, z: 0 },
+        scale: 1.5
+    },
+    'Arc Reactor': {
+        url: 'Assets/Models/arc_reactor.glb',
+        rotation: { x: 0, y: 0, z: 0 },
+        scale: 1.0
+    },
+    'Mjolnir': {
+        url: 'Assets/Models/mjolnir.glb',
+        rotation: { x: -Math.PI / 2, y: 0, z: 0 },
+        scale: 1.5
+    },
+    'Gear': {
+        url: 'Assets/Models/gear.glb',
+        rotation: { x: 0, y: 0, z: 0 },
+        scale: 1.5
+    },
     'Shoe': {
         url: 'Assets/Models/shoes.glb',
         rotation: { x: 0, y: 0, z: 0 },
+        scale: 1.5
+    },
+    'Airplane': {
+        url: 'Assets/Models/airplane.glb',
+        rotation: { x: -Math.PI / 2, y: 0, z: 0 },
         scale: 1.5
     },
 
